@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; color: #1a2b1f; background: #f6f7f1; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #c3e6cf; }
+  @keyframes cs-grow { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes cs-fadeup { from { transform: translateY(14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; display: flex; flex-direction: column; background: #f6f7f1;">
+
+  <!-- ===== HEADER ===== -->
+  <header style="position: sticky; top: 0; z-index: 50; background: #ffffff; border-bottom: 1px solid #e6e9df; box-shadow: 0 2px 14px rgba(20,61,34,0.05);">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <div onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 14px; cursor: pointer;">
+        <img src="assets/core-seeds-logo.png" alt="Core Seeds" style="height: 44px; width: auto; display: block;">
+        <div style="width: 1px; height: 30px; background: #e6e9df;"></div>
+        <span style="font-size: 9.5px; letter-spacing: 2px; color: #9aa896; font-weight: 600; text-transform: uppercase; line-height: 1.35; max-width: 96px;">Coregenes Seed Research</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <nav style="display: flex; align-items: center; gap: 2px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <div onClick="{{ item.go }}" style="padding: 9px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all .15s; color: {{ item.color }}; background: {{ item.bg }};" style-hover="background:#eef3ea; color:#14532d;">{{ item.label }}</div>
+          </sc-for>
+        </nav>
+        <div style="width: 1px; height: 26px; background: #e6e9df;"></div>
+        <div style="position: relative;">
+          <div onClick="{{ toggleLang }}" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #dde3d6; cursor: pointer; font-weight: 600; font-size: 13.5px; color: #14532d; background: #fbfcf8;" style-hover="background:#eef3ea;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1f7a3d" stroke-width="1.6"></circle><path d="M3 12h18" stroke="#1f7a3d" stroke-width="1.4"></path><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke="#1f7a3d" stroke-width="1.4"></path></svg>
+            <span>{{ langLabel }}</span>
+            <span style="font-size: 9px; color: #7a8a7c;">▼</span>
+          </div>
+          <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position: absolute; right: 0; top: 48px; background: #fff; border: 1px solid #e6e9df; border-radius: 14px; box-shadow: 0 16px 40px rgba(20,61,34,0.16); padding: 8px; width: 196px; max-height: 360px; overflow-y: auto; z-index: 80;">
+              <sc-for list="{{ langOptions }}" as="lng" hint-placeholder-count="6">
+                <div onClick="{{ lng.pick }}" style="display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-radius: 9px; cursor: pointer; font-size: 14.5px; font-weight: {{ lng.weight }}; color: {{ lng.color }}; background: {{ lng.bg }};" style-hover="background:#eef3ea;"><span>{{ lng.native }}</span><span style="font-size: 11px; color: #9aa896; font-weight: 500;">{{ lng.en }}</span></div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <a href="https://www.youtube.com/@coreseeds" target="_blank" rel="noopener" title="Core Seeds on YouTube" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: #ff0000; box-shadow: 0 4px 12px rgba(255,0,0,0.28); text-decoration: none;" style-hover="background:#e60000;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" style="position: relative"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.5c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.5c0-1.7-.2-3.3-.2-3.3ZM10 14.5v-5l4.2 2.5L10 14.5Z"></path><svg width="160" height="80" viewBox="0 0 160 80" style="position: absolute; left: 1px; top: 13px; width: 160px; height: 80px; overflow: visible; fill: none; stroke: #8a8378; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round"><path d="M 0 80 L 160 0"></path></svg></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex: 1; position: relative; z-index: 1;">
+
+    <!-- ===================== HOME ===================== -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <!-- Hero -->
+      <section style="position: relative; background: #0f3d22; overflow: hidden;">
+        <video ref="{{ videoRef }}" autoplay="" muted="" playsinline="" src="assets/seed-growth.mp4" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"></video>
+        <div style="position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(8,40,21,0.92) 0%, rgba(10,50,26,0.78) 40%, rgba(10,50,26,0.30) 72%, rgba(8,40,21,0.45) 100%);"></div>
+        <div style="position: absolute; right: -60px; bottom: -60px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(240,180,41,0.22), transparent 70%); z-index: 1;"></div>
+        <div style="max-width: 1240px; margin: 0 auto; padding: 120px 32px 126px; min-height: 78vh; display: flex; align-items: center; position: relative; z-index: 2">
+          <div style="max-width: 600px;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 999px; background: rgba(240,180,41,0.16); border: 1px solid rgba(240,180,41,0.4); margin-bottom: 26px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #f0b429;"></span>
+              <span style="color: #f6d894; font-weight: 600; font-size: 13px; letter-spacing: 1px;">{{ heroBadge }}</span>
+            </div>
+            <h1 style="font-family: 'Poppins'; font-weight: 800; color: #ffffff; font-size: 54px; line-height: 1.08; letter-spacing: -0.5px;">{{ heroT1 }}<br>{{ heroT2 }} <span style="color: #f0b429;">{{ heroT3 }}</span></h1>
+            <p style="color: #d4e7da; font-size: 18px; line-height: 1.65; margin-top: 22px; max-width: 520px;">{{ heroSub }}</p>
+            <div style="display: flex; gap: 14px; margin-top: 34px;">
+              <div onClick="{{ goProducts }}" style="padding: 15px 30px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 8px 22px rgba(240,180,41,0.35);" style-hover="background:#ffc640;">{{ btnExplore }}</div>
+              <div onClick="{{ goContact }}" style="padding: 15px 30px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.35); color: #fff; font-weight: 600; font-size: 15px; cursor: pointer;" style-hover="background:rgba(255,255,255,0.2);">{{ btnTouch }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats strip -->
+      <section style="background: #14532d;">
+        <div style="max-width: 1240px; margin: 0 auto; padding: 26px 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="text-align: center; border-right: 1px solid rgba(255,255,255,0.12);">
+              <div style="font-family: 'Poppins'; font-weight: 800; font-size: 30px; color: #f0b429;">{{ s.num }}</div>
+              <div style="font-size: 13px; color: #b9d2c0; margin-top: 2px;">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- About teaser -->
+      <section style="max-width: 1240px; margin: 0 auto; padding: 86px 32px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 58px; align-items: center;">
+        <div style="aspect-ratio: 1/1; border-radius: 22px; overflow: hidden; border: 1px solid #dde6d4; background: #e9f0e2;">
+          <img src="https://coreseeds.in/wp-content/uploads/2025/10/ff4140f90f21c9946f36d742393e33550cbfd4ed-1.png" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <div>
+          <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ whoWeAre }}</div>
+          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 38px; line-height: 1.15; margin-top: 10px; color: #14532d; letter-spacing: -0.5px;">{{ aboutTitle }}</h2>
+          <p style="color: #4a5a4d; font-size: 16.5px; line-height: 1.7; margin-top: 20px;">{{ aboutTeaserText }}</p>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 24px;">
+            <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 13px;">
+                <div style="width: 26px; height: 26px; border-radius: 50%; background: #e3f0e6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1f7a3d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                <span style="color: #2c3d2f; font-size: 15.5px; font-weight: 500;">{{ p }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div onClick="{{ goAbout }}" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; padding: 13px 26px; border-radius: 999px; background: #1f7a3d; color: #fff; font-weight: 600; font-size: 14.5px; cursor: pointer;" style-hover="background:#14532d;">{{ moreAbout }}</div>
+        </div>
+      </section>
+
+      <!-- Crops -->
+      <section style="background: #ffffff; border-top: 1px solid #ecefe5; border-bottom: 1px solid #ecefe5;">
+        <div style="max-width: 1240px; margin: 0 auto; padding: 84px 32px;">
+          <div style="text-align: center; max-width: 640px; margin: 0 auto 50px;">
+            <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ ourCrops }}</div>
+            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ cropsTitle }}</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
+            <sc-for list="{{ crops }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ goProducts }}" style="border-radius: 18px; padding: 30px 18px; text-align: center; background: {{ c.bg }}; border: 1px solid {{ c.border }}; cursor: pointer; transition: transform .15s;" style-hover="transform:translateY(-4px);">
+                <div style="font-size: 36px; height: 40px; display: flex; align-items: center; justify-content: center;"><sc-if value="{{ c.iconImg }}" hint-placeholder-val="{{ false }}"><div style="width: 48px; height: 40px; background-image: url({{ c.iconImg }}); background-size: contain; background-position: center; background-repeat: no-repeat;"></div></sc-if><sc-if value="{{ c.showEmoji }}" hint-placeholder-val="{{ true }}">{{ c.icon }}</sc-if></div>
+                <div style="font-family: 'Poppins'; font-weight: 700; font-size: 18px; margin-top: 12px; color: #14532d;">{{ c.name }}</div>
+                <div style="font-size: 13px; color: #6a7a6c; margin-top: 4px;">{{ c.count }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
+        <div style="border-radius: 26px; background: linear-gradient(115deg, #14532d, #1f7a3d); padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden;">
+          <div style="position: absolute; right: -40px; top: -40px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(240,180,41,0.22), transparent 70%);"></div>
+          <div style="position: relative;">
+            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #fff; line-height: 1.2;">{{ ctaTitle }}</h2>
+            <p style="color: #cfe2d5; font-size: 16px; margin-top: 12px; max-width: 540px;">{{ ctaSub }}</p>
+          </div>
+          <div onClick="{{ goContact }}" style="flex-shrink: 0; padding: 16px 34px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15.5px; cursor: pointer; position: relative;" style-hover="background:#ffc640;">{{ contactBtn }}</div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== ABOUT ===================== -->
+    <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+        <div style="max-width: 1240px; margin: 0 auto;">
+          <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ aboutEy }}</div>
+          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ aboutH1 }}</h1>
+        </div>
+      </div>
+
+      <section style="max-width: 980px; margin: 0 auto; padding: 70px 32px 30px;">
+        <p style="font-size: 18px; line-height: 1.8; color: #3a4a3d;">{{ aboutBody1 }}</p>
+        <p style="font-size: 18px; line-height: 1.8; color: #3a4a3d; margin-top: 22px;">{{ aboutBody2 }}</p>
+      </section>
+
+      <!-- Leadership -->
+      <section style="max-width: 1080px; margin: 0 auto; padding: 30px 32px 50px;">
+        <div style="text-align: center; margin-bottom: 38px;">
+          <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ leadershipEy }}</div>
+          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 34px; margin-top: 10px; color: #14532d;">{{ leadershipTitle }}</h2>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <sc-for list="{{ leaders }}" as="L" hint-placeholder-count="2">
+            <div style="background: #fff; border: 1px solid #e6e9df; border-left: 5px solid #f0b429; border-radius: 18px; padding: 32px 36px; box-shadow: 0 10px 30px rgba(20,61,34,0.05);">
+              <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 24px; color: #14532d;">{{ L.name }}</h3>
+              <div style="display: inline-block; margin-top: 6px; padding: 4px 14px; border-radius: 999px; background: #fdf2d9; color: #a07206; font-weight: 600; font-size: 13px;">{{ L.role }}</div>
+              <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;">
+                <sc-for list="{{ L.bioList }}" as="para" hint-placeholder-count="2">
+                  <p style="font-size: 16px; line-height: 1.75; color: #4a5a4d;">{{ para }}</p>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- Infrastructure -->
+      <section style="background: #ffffff; border-top: 1px solid #ecefe5; margin-top: 30px;">
+        <div style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
+          <div style="text-align: center; margin-bottom: 50px;">
+            <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ infraEy }}</div>
+            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ infraTitle }}</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px;">
+            <sc-for list="{{ infra }}" as="f" hint-placeholder-count="4">
+              <div style="border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; background: #fbfcf8;">
+                <div style="aspect-ratio: 16/9; overflow: hidden; background: #e9f0e2;">
+                  <img src="{{ f.img }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <div style="padding: 24px 26px;">
+                  <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 20px; color: #14532d;">{{ f.title }}</h3>
+                  <p style="font-size: 14.5px; line-height: 1.65; color: #4a5a4d; margin-top: 10px;">{{ f.desc }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== PRODUCTS ===================== -->
+    <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+        <div style="max-width: 1240px; margin: 0 auto;">
+          <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ productsEy }}</div>
+          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ productsH1 }}</h1>
+        </div>
+      </div>
+
+      <div style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
+
+        <!-- Cotton -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 28px;">
+          <span style="font-size: 30px;">🌿</span>
+          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ cottonTitle }}</h2>
+          <div style="flex: 1; height: 1px; background: #e0e5d7;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
+          <sc-for list="{{ cotton }}" as="p" hint-placeholder-count="5">
+            <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
+              <div style="aspect-ratio: 4/3.4; overflow: hidden; background: #f4f7ef; display: flex; align-items: center; justify-content: center;"><img src="{{ p.img }}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+              <div style="padding: 22px 22px 26px;">
+                <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 21px; color: #1f7a3d;">{{ p.name }}</h3>
+                <ul style="list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 9px;">
+                  <sc-for list="{{ p.points }}" as="pt" hint-placeholder-count="5">
+                    <li style="display: flex; gap: 9px; font-size: 13.5px; line-height: 1.5; color: #4a5a4d;"><span style="color:#f0b429; font-weight:700; flex-shrink:0;">•</span><span>{{ pt }}</span></li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- Maize -->
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 28px;">
+          <span style="font-size: 30px;">🌽</span>
+          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ maizeTitle }}</h2>
+          <div style="flex: 1; height: 1px; background: #e0e5d7;"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
+          <sc-for list="{{ maize }}" as="p" hint-placeholder-count="3">
+            <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
+              <div style="aspect-ratio: 4/3.4; overflow: hidden; background: #fdf8ec; display: flex; align-items: center; justify-content: center;"><img src="{{ p.img }}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
+              <div style="padding: 22px 22px 26px;">
+                <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 21px; color: #1f7a3d;">{{ p.name }}</h3>
+                <ul style="list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 9px;">
+                  <sc-for list="{{ p.points }}" as="pt" hint-placeholder-count="5">
+                    <li style="display: flex; gap: 9px; font-size: 13.5px; line-height: 1.5; color: #4a5a4d;"><span style="color:#f0b429; font-weight:700; flex-shrink:0;">•</span><span>{{ pt }}</span></li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- Paddy / Red Gram / Bhendi -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+          <sc-for list="{{ otherCrops }}" as="g" hint-placeholder-count="3">
+            <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; padding: 28px; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <sc-if value="{{ g.iconImg }}" hint-placeholder-val="{{ false }}"><div style="width: 30px; height: 28px; background-image: url({{ g.iconImg }}); background-size: contain; background-position: center; background-repeat: no-repeat;"></div></sc-if><sc-if value="{{ g.showEmoji }}" hint-placeholder-val="{{ true }}"><span style="font-size: 24px;">{{ g.icon }}</span></sc-if>
+                <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 24px; color: #14532d;">{{ g.name }}</h2>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
+                <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                  <div style="border: 1px solid #ecefe5; border-radius: 12px; padding: 13px 16px; background: #fbfcf8;">
+                    <div style="font-family: 'Poppins'; font-weight: 700; font-size: 16px; color: #1f7a3d;">{{ it.name }}</div>
+                    <sc-if value="{{ it.desc }}" hint-placeholder-val="x"><div style="font-size: 13px; color: #5c6b5e; margin-top: 3px;">{{ it.desc }}</div></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===================== GALLERY ===================== -->
+    <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+        <div style="max-width: 1240px; margin: 0 auto;">
+          <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ galleryEy }}</div>
+          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ galleryH1 }}</h1>
+        </div>
+      </div>
+      <section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="9">
+            <div style="aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; border: 1px solid #e6e9df; background: #e9f0e2;">
+              <img src="{{ g.src }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ===================== CONTACT ===================== -->
+    <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+        <div style="max-width: 1240px; margin: 0 auto;">
+          <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ contactEy }}</div>
+          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ contactH1 }}</h1>
+        </div>
+      </div>
+      <section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 44px;">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <sc-for list="{{ contactCards }}" as="c" hint-placeholder-count="3">
+            <div style="display: flex; gap: 16px; align-items: flex-start; background: #fff; border: 1px solid #e6e9df; border-radius: 16px; padding: 22px;">
+              <div style="width: 46px; height: 46px; border-radius: 12px; background: #e3f0e6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px;">{{ c.icon }}</div>
+              <div>
+                <div style="font-family: 'Poppins'; font-weight: 700; font-size: 16px; color: #14532d;">{{ c.title }}</div>
+                <div style="font-size: 14px; color: #4a5a4d; margin-top: 4px; line-height: 1.55;">{{ c.value }}</div>
+              </div>
+            </div>
+          </sc-for>
+          <a href="https://youtube.com/@coreseeds?si=7IXCHKWe7XDUz64G" target="_blank" rel="noopener" style="display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid #e6e9df; border-radius: 16px; padding: 22px; text-decoration: none;" style-hover="border-color:#ff0000;">
+            <div style="width: 46px; height: 46px; border-radius: 12px; background: #ff0000; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.5c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.5c0-1.7-.2-3.3-.2-3.3ZM10 14.5v-5l4.2 2.5L10 14.5Z"></path></svg></div>
+            <div>
+              <div style="font-family: 'Poppins'; font-weight: 700; font-size: 16px; color: #14532d;">{{ youtubeTitle }}</div>
+              <div style="font-size: 14px; color: #4a5a4d; margin-top: 4px; display: none">https://youtube.com/@coreseeds?si=7IXCHKWe7XDUz64G</div>
+            </div>
+          </a>
+        </div>
+        <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 22px; padding: 36px; box-shadow: 0 12px 34px rgba(20,61,34,0.06);">
+          <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 24px; color: #14532d;">{{ formTitle }}</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px;">
+            <div style="display: flex; flex-direction: column; gap: 7px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formNameLabel }}</label><input placeholder="{{ formNamePlaceholder }}" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></div>
+            <div style="display: flex; flex-direction: column; gap: 7px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formPhoneLabel }}</label><input placeholder="{{ formPhonePlaceholder }}" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formEmailLabel }}</label><input placeholder="{{ formEmailPlaceholder }}" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></div>
+          <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formMessageLabel }}</label><textarea placeholder="{{ formMessagePlaceholder }}" rows="4" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; resize: vertical; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></textarea></div>
+          <div style="margin-top: 22px; padding: 15px 30px; border-radius: 999px; background: #1f7a3d; color: #fff; font-weight: 700; font-size: 15px; text-align: center; cursor: pointer; display: inline-block;" style-hover="background:#14532d;">{{ btnSend }}</div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+</main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background: #0f3d22; color: #cfe2d5; position: relative; z-index: 1;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 56px 32px 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px;">
+      <div>
+        <div style="display: inline-flex; align-items: center; background: #ffffff; padding: 11px 16px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.2);">
+          <img src="assets/core-seeds-logo.png" alt="Core Seeds" style="height: 40px; width: auto; display: block;">
+        </div>
+        <p style="font-size: 14px; line-height: 1.7; margin-top: 18px; max-width: 340px; color: #a9c4af;">{{ footerSummary }}</p>
+      </div>
+      <div>
+        <div style="font-family: 'Poppins'; font-weight: 700; font-size: 15px; color: #fff; margin-bottom: 16px;">{{ quickLinks }}</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <div onClick="{{ item.go }}" style="font-size: 14px; color: #a9c4af; cursor: pointer; width: fit-content;" style-hover="color:#f0b429;">{{ item.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-family: 'Poppins'; font-weight: 700; font-size: 15px; color: #fff; margin-bottom: 16px;">{{ followUs }}</div>
+        <div style="display: flex; gap: 12px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="3">
+            <a href="{{ s.url }}" target="_blank" rel="noopener" title="{{ s.title }}" style="width: 40px; height: 40px; border-radius: 50%; background: {{ s.bg }}; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: #cfe2d5;" style-hover="opacity:0.85;">
+              <span style="font-size: 14px; font-weight: 700; color: #fff;">{{ s.label }}</span>
+            </a>
+          </sc-for>
+        </div>
+        <div style="font-size: 13px; color: #8fa896; margin-top: 18px; line-height: 1.6;">{{ subscribeNote }}</div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgba(255,255,255,0.1);">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 18px 32px; font-size: 13px; color: #8fa896; text-align: center;">© Copyright 2025 Core Seeds. All rights reserved.</div>
+    </div>
+  </footer>
+
+</div>
+<div id="google_translate_element" style="display:none;"></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { tab: 'home', lang: 'en', langOpen: false };
+
+  videoRef = React.createRef();
+
+  playBg = () => {
+    const v = this.videoRef.current;
+    if (!v) return;
+    v.muted = true; v.loop = false; v.playsInline = true; v.defaultMuted = true;
+    const p = v.play();
+    if (p && p.catch) p.catch(() => {});
+  };
+
+  componentDidMount() {
+    this.playBg();
+    this.initTranslate();
+  }
+  componentDidUpdate(_prevProps, prevState) {
+    this.playBg();
+    if (prevState.lang !== this.state.lang) this.applyGoogleTranslate(this.state.lang);
+  }
+
+  initTranslate = () => {
+    if (typeof window === 'undefined') return;
+    if (window.__coreSeedsTranslateBooted) {
+      this.applyGoogleTranslate(this.state.lang);
+      return;
+    }
+
+    const supported = this.langList.map(l => l.code).filter(code => code !== 'en').join(',');
+
+    window.__coreSeedsTranslateInit = () => {
+      if (!window.google || !window.google.translate) return;
+      try {
+        new window.google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: supported,
+          autoDisplay: false,
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        }, 'google_translate_element');
+        window.__coreSeedsTranslateBooted = true;
+        this.applyGoogleTranslate(this.state.lang);
+      } catch (_err) {}
+    };
+
+    if (window.google && window.google.translate) {
+      window.__coreSeedsTranslateInit();
+      return;
+    }
+
+    if (!document.querySelector('script[data-core-seeds-translate]')) {
+      const s = document.createElement('script');
+      s.src = 'https://translate.google.com/translate_a/element.js?cb=__coreSeedsTranslateInit';
+      s.async = true;
+      s.setAttribute('data-core-seeds-translate', 'true');
+      document.body.appendChild(s);
+    }
+  };
+
+  applyGoogleTranslate = (lang) => {
+    if (typeof window === 'undefined') return;
+    const tryApply = (attempt = 0) => {
+      const combo = document.querySelector('.goog-te-combo');
+      if (!combo) {
+        if (attempt < 25) setTimeout(() => tryApply(attempt + 1), 250);
+        return;
+      }
+      const target = lang === 'en' ? '' : lang;
+      if (combo.value !== target) {
+        combo.value = target;
+        combo.dispatchEvent(new Event('change'));
+      }
+    };
+    tryApply();
+  };
+
+  i18n = {
+    en: { home:'Home', about:'About Us', products:'Products', gallery:'Gallery', contact:'Contact Us',
+      heroBadge:"ONE OF INDIA'S FASTEST-GROWING SEED COMPANIES", heroT1:'Growing Trust,', heroT2:'Harvesting', heroT3:'Prosperity',
+      heroSub:'High-performance hybrid seeds in Cotton, Maize, Paddy & more — driven by relentless research and a farmer-first commitment.',
+      btnExplore:'Explore Our Seeds', btnTouch:'Get in Touch', heroStat:'Hybrid varieties across 5 crops',
+      whoWeAre:'Who We Are', aboutTitle:'Transforming Indian agriculture through innovation', moreAbout:'More About Us →',
+      ourCrops:'Our Crops', cropsTitle:'Seeds engineered for every region',
+      ctaTitle:'Partner with Core Seeds today', ctaSub:'Dependable, innovative and sustainable seed solutions to enhance productivity and improve rural livelihoods.', contactBtn:'Contact Us',
+      quickLinks:'Quick Links', followUs:'Follow Us On', subscribeNote:'Subscribe on YouTube for field trials, crop guidance and farmer stories.',
+      aboutEy:'About Us', aboutH1:'Rooted in research, growing with farmers',
+      productsEy:'Our Products', productsH1:'Hybrid seeds, proven in the field',
+      galleryEy:'Gallery', galleryH1:'Moments from the field',
+      contactEy:'Contact Us', contactH1:"Let's grow together",
+      infraEy:'Our Infrastructure', infraTitle:'Built for quality at every step',
+      formTitle:'Send us a message', btnSend:'Send Message', youtubeTitle:'Watch on YouTube',
+      statCrops:'Core crops', statVar:'Hybrid varieties', statStates:'States served', statFarmer:'Farmer-focused' },
+
+    hi: { home:'होम', about:'हमारे बारे में', products:'उत्पाद', gallery:'गैलरी', contact:'संपर्क करें',
+      heroBadge:'भारत की सबसे तेज़ी से बढ़ती बीज कंपनियों में से एक', heroT1:'विश्वास का रोपण,', heroT2:'समृद्धि की', heroT3:'फ़सल',
+      heroSub:'कपास, मक्का, धान और अन्य फ़सलों में उच्च-प्रदर्शन वाले हाइब्रिड बीज — निरंतर शोध और किसान-प्रथम प्रतिबद्धता से प्रेरित।',
+      btnExplore:'हमारे बीज देखें', btnTouch:'संपर्क करें', heroStat:'5 फ़सलों में हाइब्रिड किस्में',
+      whoWeAre:'हम कौन हैं', aboutTitle:'नवाचार के माध्यम से भारतीय कृषि का रूपांतरण', moreAbout:'और जानें →',
+      ourCrops:'हमारी फ़सलें', cropsTitle:'हर क्षेत्र के लिए तैयार किए गए बीज',
+      ctaTitle:'आज ही कोर सीड्स से जुड़ें', ctaSub:'उत्पादकता बढ़ाने और ग्रामीण आजीविका सुधारने के लिए भरोसेमंद, नवीन और टिकाऊ बीज समाधान।', contactBtn:'संपर्क करें',
+      quickLinks:'त्वरित लिंक', followUs:'हमें फ़ॉलो करें', subscribeNote:'खेत परीक्षण, फ़सल मार्गदर्शन और किसान कहानियों के लिए यूट्यूब पर सब्सक्राइब करें।',
+      aboutEy:'हमारे बारे में', aboutH1:'शोध में निहित, किसानों के साथ बढ़ते हुए',
+      productsEy:'हमारे उत्पाद', productsH1:'खेत में सिद्ध हाइब्रिड बीज',
+      galleryEy:'गैलरी', galleryH1:'खेत के पल',
+      contactEy:'संपर्क करें', contactH1:'आइए साथ मिलकर बढ़ें',
+      infraEy:'हमारा बुनियादी ढांचा', infraTitle:'हर कदम पर गुणवत्ता के लिए निर्मित',
+      formTitle:'हमें संदेश भेजें', btnSend:'संदेश भेजें', youtubeTitle:'यूट्यूब पर देखें',
+      statCrops:'मुख्य फ़सलें', statVar:'हाइब्रिड किस्में', statStates:'राज्यों में सेवा', statFarmer:'किसान-केंद्रित' },
+
+    te: { home:'హోమ్', about:'మా గురించి', products:'ఉత్పత్తులు', gallery:'గ్యాలరీ', contact:'సంప్రదించండి',
+      heroBadge:'భారతదేశంలో అత్యంత వేగంగా ఎదుగుతున్న విత్తన కంపెనీలలో ఒకటి', heroT1:'నమ్మకాన్ని పెంచుతూ,', heroT2:'సమృద్ధిని', heroT3:'పండిస్తూ',
+      heroSub:'పత్తి, మొక్కజొన్న, వరి తదితర పంటలలో అధిక-ప్రదర్శన హైబ్రిడ్ విత్తనాలు — నిరంతర పరిశోధన మరియు రైతు-ప్రథమ నిబద్ధతతో.',
+      btnExplore:'మా విత్తనాలను చూడండి', btnTouch:'సంప్రదించండి', heroStat:'5 పంటలలో హైబ్రిడ్ రకాలు',
+      whoWeAre:'మేము ఎవరం', aboutTitle:'ఆవిష్కరణ ద్వారా భారత వ్యవసాయాన్ని మార్చడం', moreAbout:'మరింత తెలుసుకోండి →',
+      ourCrops:'మా పంటలు', cropsTitle:'ప్రతి ప్రాంతానికి తయారు చేసిన విత్తనాలు',
+      ctaTitle:'ఈరోజే కోర్ సీడ్స్‌తో భాగస్వామ్యం', ctaSub:'ఉత్పాదకతను పెంచడానికి, గ్రామీణ జీవనోపాధిని మెరుగుపరచడానికి నమ్మకమైన, వినూత్న, స్థిరమైన విత్తన పరిష్కారాలు.', contactBtn:'సంప్రదించండి',
+      quickLinks:'త్వరిత లింకులు', followUs:'మమ్మల్ని అనుసరించండి', subscribeNote:'పొలం పరీక్షలు, పంట మార్గదర్శనం, రైతు కథల కోసం యూట్యూబ్‌లో సబ్‌స్క్రైబ్ చేయండి.',
+      aboutEy:'మా గురించి', aboutH1:'పరిశోధనలో పాతుకుని, రైతులతో ఎదుగుతూ',
+      productsEy:'మా ఉత్పత్తులు', productsH1:'పొలంలో నిరూపితమైన హైబ్రిడ్ విత్తనాలు',
+      galleryEy:'గ్యాలరీ', galleryH1:'పొలంలోని క్షణాలు',
+      contactEy:'సంప్రదించండి', contactH1:'కలిసి ఎదుగుదాం',
+      infraEy:'మా మౌలిక సదుపాయాలు', infraTitle:'ప్రతి దశలో నాణ్యత కోసం నిర్మించబడింది',
+      formTitle:'మాకు సందేశం పంపండి', btnSend:'సందేశం పంపండి', youtubeTitle:'యూట్యూబ్‌లో చూడండి',
+      statCrops:'ప్రధాన పంటలు', statVar:'హైబ్రిడ్ రకాలు', statStates:'రాష్ట్రాలలో సేవ', statFarmer:'రైతు-కేంద్రిత' },
+
+    ta: { home:'முகப்பு', about:'எங்களைப் பற்றி', products:'தயாரிப்புகள்', gallery:'படத்தொகுப்பு', contact:'தொடர்பு கொள்ளவும்',
+      heroBadge:'இந்தியாவின் வேகமாக வளரும் விதை நிறுவனங்களில் ஒன்று', heroT1:'நம்பிக்கையை வளர்த்து,', heroT2:'செழிப்பை', heroT3:'அறுவடை செய்கிறோம்',
+      heroSub:'பருத்தி, மக்காச்சோளம், நெல் உள்ளிட்ட பயிர்களில் உயர் செயல்திறன் கலப்பின விதைகள் — தொடர் ஆராய்ச்சி மற்றும் விவசாயி-முதன்மை அர்ப்பணிப்புடன்.',
+      btnExplore:'எங்கள் விதைகளைப் பாருங்கள்', btnTouch:'தொடர்பு கொள்ளவும்', heroStat:'5 பயிர்களில் கலப்பின வகைகள்',
+      whoWeAre:'நாங்கள் யார்', aboutTitle:'புதுமையால் இந்திய விவசாயத்தை மாற்றுகிறோம்', moreAbout:'மேலும் அறிக →',
+      ourCrops:'எங்கள் பயிர்கள்', cropsTitle:'ஒவ்வொரு பகுதிக்கும் உருவாக்கப்பட்ட விதைகள்',
+      ctaTitle:'இன்றே கோர் சீட்ஸுடன் இணையுங்கள்', ctaSub:'உற்பத்தித்திறனை அதிகரிக்கவும் கிராமப்புற வாழ்வாதாரத்தை மேம்படுத்தவும் நம்பகமான, புதுமையான, நிலையான விதை தீர்வுகள்.', contactBtn:'தொடர்பு கொள்ளவும்',
+      quickLinks:'விரைவு இணைப்புகள்', followUs:'எங்களைப் பின்தொடரவும்', subscribeNote:'வயல் சோதனைகள், பயிர் வழிகாட்டுதல், விவசாயி கதைகளுக்கு யூடியூபில் சந்தா செலுத்துங்கள்.',
+      aboutEy:'எங்களைப் பற்றி', aboutH1:'ஆராய்ச்சியில் வேரூன்றி, விவசாயிகளுடன் வளர்கிறோம்',
+      productsEy:'எங்கள் தயாரிப்புகள்', productsH1:'வயலில் நிரூபிக்கப்பட்ட கலப்பின விதைகள்',
+      galleryEy:'படத்தொகுப்பு', galleryH1:'வயலின் தருணங்கள்',
+      contactEy:'தொடர்பு கொள்ளவும்', contactH1:'ஒன்றாக வளர்வோம்',
+      infraEy:'எங்கள் உள்கட்டமைப்பு', infraTitle:'ஒவ்வொரு கட்டத்திலும் தரத்திற்காக கட்டப்பட்டது',
+      formTitle:'எங்களுக்கு செய்தி அனுப்புங்கள்', btnSend:'செய்தி அனுப்பு', youtubeTitle:'யூடியூபில் பாருங்கள்',
+      statCrops:'முக்கிய பயிர்கள்', statVar:'கலப்பின வகைகள்', statStates:'மாநிலங்களில் சேவை', statFarmer:'விவசாயி-மையம்' },
+
+    kn: { home:'ಮುಖಪುಟ', about:'ನಮ್ಮ ಬಗ್ಗೆ', products:'ಉತ್ಪನ್ನಗಳು', gallery:'ಗ್ಯಾಲರಿ', contact:'ಸಂಪರ್ಕಿಸಿ',
+      heroBadge:'ಭಾರತದ ಅತ್ಯಂತ ವೇಗವಾಗಿ ಬೆಳೆಯುತ್ತಿರುವ ಬೀಜ ಕಂಪನಿಗಳಲ್ಲಿ ಒಂದು', heroT1:'ವಿಶ್ವಾಸವನ್ನು ಬೆಳೆಸುತ್ತಾ,', heroT2:'ಸಮೃದ್ಧಿಯನ್ನು', heroT3:'ಕೊಯ್ಲು ಮಾಡುತ್ತಾ',
+      heroSub:'ಹತ್ತಿ, ಜೋಳ, ಭತ್ತ ಮುಂತಾದ ಬೆಳೆಗಳಲ್ಲಿ ಹೆಚ್ಚಿನ ಕಾರ್ಯಕ್ಷಮತೆಯ ಹೈಬ್ರಿಡ್ ಬೀಜಗಳು — ನಿರಂತರ ಸಂಶೋಧನೆ ಮತ್ತು ರೈತ-ಮೊದಲ ಬದ್ಧತೆಯಿಂದ.',
+      btnExplore:'ನಮ್ಮ ಬೀಜಗಳನ್ನು ನೋಡಿ', btnTouch:'ಸಂಪರ್ಕಿಸಿ', heroStat:'5 ಬೆಳೆಗಳಲ್ಲಿ ಹೈಬ್ರಿಡ್ ತಳಿಗಳು',
+      whoWeAre:'ನಾವು ಯಾರು', aboutTitle:'ಆವಿಷ್ಕಾರದ ಮೂಲಕ ಭಾರತೀಯ ಕೃಷಿಯ ಪರಿವರ್ತನೆ', moreAbout:'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ →',
+      ourCrops:'ನಮ್ಮ ಬೆಳೆಗಳು', cropsTitle:'ಪ್ರತಿ ಪ್ರದೇಶಕ್ಕೂ ಸಿದ್ಧಪಡಿಸಿದ ಬೀಜಗಳು',
+      ctaTitle:'ಇಂದೇ ಕೋರ್ ಸೀಡ್ಸ್ ಜೊತೆ ಸೇರಿ', ctaSub:'ಉತ್ಪಾದಕತೆಯನ್ನು ಹೆಚ್ಚಿಸಲು ಮತ್ತು ಗ್ರಾಮೀಣ ಜೀವನೋಪಾಯವನ್ನು ಸುಧಾರಿಸಲು ವಿಶ್ವಾಸಾರ್ಹ, ನವೀನ ಮತ್ತು ಸುಸ್ಥಿರ ಬೀಜ ಪರಿಹಾರಗಳು.', contactBtn:'ಸಂಪರ್ಕಿಸಿ',
+      quickLinks:'ತ್ವರಿತ ಲಿಂಕ್‌ಗಳು', followUs:'ನಮ್ಮನ್ನು ಅನುಸರಿಸಿ', subscribeNote:'ಹೊಲ ಪ್ರಯೋಗಗಳು, ಬೆಳೆ ಮಾರ್ಗದರ್ಶನ ಮತ್ತು ರೈತರ ಕಥೆಗಳಿಗಾಗಿ ಯೂಟ್ಯೂಬ್‌ನಲ್ಲಿ ಸಬ್‌ಸ್ಕ್ರೈಬ್ ಮಾಡಿ.',
+      aboutEy:'ನಮ್ಮ ಬಗ್ಗೆ', aboutH1:'ಸಂಶೋಧನೆಯಲ್ಲಿ ಬೇರೂರಿ, ರೈತರೊಂದಿಗೆ ಬೆಳೆಯುತ್ತಾ',
+      productsEy:'ನಮ್ಮ ಉತ್ಪನ್ನಗಳು', productsH1:'ಹೊಲದಲ್ಲಿ ಸಾಬೀತಾದ ಹೈಬ್ರಿಡ್ ಬೀಜಗಳು',
+      galleryEy:'ಗ್ಯಾಲರಿ', galleryH1:'ಹೊಲದ ಕ್ಷಣಗಳು',
+      contactEy:'ಸಂಪರ್ಕಿಸಿ', contactH1:'ಒಟ್ಟಿಗೆ ಬೆಳೆಯೋಣ',
+      infraEy:'ನಮ್ಮ ಮೂಲಸೌಕರ್ಯ', infraTitle:'ಪ್ರತಿ ಹಂತದಲ್ಲೂ ಗುಣಮಟ್ಟಕ್ಕಾಗಿ ನಿರ್ಮಿಸಲಾಗಿದೆ',
+      formTitle:'ನಮಗೆ ಸಂದೇಶ ಕಳುಹಿಸಿ', btnSend:'ಸಂದೇಶ ಕಳುಹಿಸಿ', youtubeTitle:'ಯೂಟ್ಯೂಬ್‌ನಲ್ಲಿ ನೋಡಿ',
+      statCrops:'ಪ್ರಮುಖ ಬೆಳೆಗಳು', statVar:'ಹೈಬ್ರಿಡ್ ತಳಿಗಳು', statStates:'ರಾಜ್ಯಗಳಲ್ಲಿ ಸೇವೆ', statFarmer:'ರೈತ-ಕೇಂದ್ರಿತ' },
+
+    ml: { home:'ഹോം', about:'ഞങ്ങളെക്കുറിച്ച്', products:'ഉൽപ്പന്നങ്ങൾ', gallery:'ഗാലറി', contact:'ബന്ധപ്പെടുക',
+      heroBadge:'ഇന്ത്യയിലെ അതിവേഗം വളരുന്ന വിത്ത് കമ്പനികളിലൊന്ന്', heroT1:'വിശ്വാസം വളർത്തി,', heroT2:'സമൃദ്ധി', heroT3:'കൊയ്യുന്നു',
+      heroSub:'പരുത്തി, ചോളം, നെല്ല് തുടങ്ങിയ വിളകളിൽ ഉയർന്ന പ്രകടനമുള്ള ഹൈബ്രിഡ് വിത്തുകൾ — തുടർച്ചയായ ഗവേഷണവും കർഷക-പ്രഥമ പ്രതിബദ്ധതയും കൊണ്ട്.',
+      btnExplore:'ഞങ്ങളുടെ വിത്തുകൾ കാണുക', btnTouch:'ബന്ധപ്പെടുക', heroStat:'5 വിളകളിൽ ഹൈബ്രിഡ് ഇനങ്ങൾ',
+      whoWeAre:'ഞങ്ങൾ ആരാണ്', aboutTitle:'നൂതനത്വത്തിലൂടെ ഇന്ത്യൻ കൃഷിയുടെ പരിവർത്തനം', moreAbout:'കൂടുതൽ അറിയുക →',
+      ourCrops:'ഞങ്ങളുടെ വിളകൾ', cropsTitle:'ഓരോ പ്രദേശത്തിനും ഒരുക്കിയ വിത്തുകൾ',
+      ctaTitle:'ഇന്നുതന്നെ കോർ സീഡ്സുമായി ചേരുക', ctaSub:'ഉൽപാദനക്ഷമത വർധിപ്പിക്കാനും ഗ്രാമീണ ഉപജീവനം മെച്ചപ്പെടുത്താനും വിശ്വസനീയവും നൂതനവും സുസ്ഥിരവുമായ വിത്ത് പരിഹാരങ്ങൾ.', contactBtn:'ബന്ധപ്പെടുക',
+      quickLinks:'പെട്ടെന്നുള്ള ലിങ്കുകൾ', followUs:'ഞങ്ങളെ പിന്തുടരുക', subscribeNote:'വയൽ പരീക്ഷണങ്ങൾ, വിള മാർഗനിർദേശം, കർഷക കഥകൾ എന്നിവയ്ക്കായി യൂട്യൂബിൽ സബ്സ്ക്രൈബ് ചെയ്യുക.',
+      aboutEy:'ഞങ്ങളെക്കുറിച്ച്', aboutH1:'ഗവേഷണത്തിൽ വേരൂന്നി, കർഷകരോടൊപ്പം വളരുന്നു',
+      productsEy:'ഞങ്ങളുടെ ഉൽപ്പന്നങ്ങൾ', productsH1:'വയലിൽ തെളിയിക്കപ്പെട്ട ഹൈബ്രിഡ് വിത്തുകൾ',
+      galleryEy:'ഗാലറി', galleryH1:'വയലിലെ നിമിഷങ്ങൾ',
+      contactEy:'ബന്ധപ്പെടുക', contactH1:'നമുക്ക് ഒരുമിച്ച് വളരാം',
+      infraEy:'ഞങ്ങളുടെ അടിസ്ഥാന സൗകര്യം', infraTitle:'ഓരോ ഘട്ടത്തിലും ഗുണനിലവാരത്തിനായി നിർമിച്ചത്',
+      formTitle:'ഞങ്ങൾക്ക് സന്ദേശം അയക്കുക', btnSend:'സന്ദേശം അയക്കുക', youtubeTitle:'യൂട്യൂബിൽ കാണുക',
+      statCrops:'പ്രധാന വിളകൾ', statVar:'ഹൈബ്രിഡ് ഇനങ്ങൾ', statStates:'സംസ്ഥാനങ്ങളിൽ സേവനം', statFarmer:'കർഷക-കേന്ദ്രീകൃതം' },
+
+    mr: { home:'मुख्यपृष्ठ', about:'आमच्याबद्दल', products:'उत्पादने', gallery:'गॅलरी', contact:'संपर्क',
+      heroBadge:'भारतातील सर्वात वेगाने वाढणाऱ्या बियाणे कंपन्यांपैकी एक', heroT1:'विश्वास रुजवत,', heroT2:'समृद्धीची', heroT3:'कापणी',
+      heroSub:'कापूस, मका, भात आणि इतर पिकांमध्ये उच्च-कार्यक्षम संकरित बियाणे — सततच्या संशोधनातून आणि शेतकरी-प्रथम बांधिलकीतून.',
+      btnExplore:'आमची बियाणे पाहा', btnTouch:'संपर्क साधा', heroStat:'5 पिकांमध्ये संकरित वाण',
+      whoWeAre:'आम्ही कोण आहोत', aboutTitle:'नवोपक्रमातून भारतीय शेतीचे परिवर्तन', moreAbout:'अधिक जाणून घ्या →',
+      ourCrops:'आमची पिके', cropsTitle:'प्रत्येक प्रदेशासाठी तयार केलेली बियाणे',
+      ctaTitle:'आजच कोर सीड्ससोबत जोडले जा', ctaSub:'उत्पादकता वाढवण्यासाठी आणि ग्रामीण उपजीविका सुधारण्यासाठी विश्वासार्ह, नाविन्यपूर्ण आणि शाश्वत बियाणे उपाय.', contactBtn:'संपर्क साधा',
+      quickLinks:'द्रुत दुवे', followUs:'आम्हाला फॉलो करा', subscribeNote:'शेत चाचण्या, पीक मार्गदर्शन आणि शेतकरी कथांसाठी यूट्यूबवर सबस्क्राइब करा.',
+      aboutEy:'आमच्याबद्दल', aboutH1:'संशोधनात रुजलेले, शेतकऱ्यांसोबत वाढणारे',
+      productsEy:'आमची उत्पादने', productsH1:'शेतात सिद्ध झालेली संकरित बियाणे',
+      galleryEy:'गॅलरी', galleryH1:'शेतातील क्षण',
+      contactEy:'संपर्क', contactH1:'चला एकत्र वाढूया',
+      infraEy:'आमची पायाभूत सुविधा', infraTitle:'प्रत्येक टप्प्यावर गुणवत्तेसाठी बांधलेले',
+      formTitle:'आम्हाला संदेश पाठवा', btnSend:'संदेश पाठवा', youtubeTitle:'यूट्यूबवर पाहा',
+      statCrops:'मुख्य पिके', statVar:'संकरित वाण', statStates:'राज्यांमध्ये सेवा', statFarmer:'शेतकरी-केंद्रित' },
+
+    gu: { home:'હોમ', about:'અમારા વિશે', products:'ઉત્પાદનો', gallery:'ગેલેરી', contact:'સંપર્ક કરો',
+      heroBadge:'ભારતની સૌથી ઝડપથી વિકસતી બીજ કંપનીઓમાંની એક', heroT1:'વિશ્વાસ ઉગાડતા,', heroT2:'સમૃદ્ધિની', heroT3:'લણણી',
+      heroSub:'કપાસ, મકાઈ, ડાંગર અને અન્ય પાકોમાં ઉચ્ચ-પ્રદર્શન સંકર બીજ — સતત સંશોધન અને ખેડૂત-પ્રથમ પ્રતિબદ્ધતાથી.',
+      btnExplore:'અમારા બીજ જુઓ', btnTouch:'સંપર્ક કરો', heroStat:'5 પાકોમાં સંકર જાતો',
+      whoWeAre:'અમે કોણ છીએ', aboutTitle:'નવીનતા દ્વારા ભારતીય ખેતીનું પરિવર્તન', moreAbout:'વધુ જાણો →',
+      ourCrops:'અમારા પાક', cropsTitle:'દરેક પ્રદેશ માટે તૈયાર કરેલા બીજ',
+      ctaTitle:'આજે જ કોર સીડ્સ સાથે જોડાઓ', ctaSub:'ઉત્પાદકતા વધારવા અને ગ્રામીણ આજીવિકા સુધારવા માટે વિશ્વસનીય, નવીન અને ટકાઉ બીજ ઉકેલો.', contactBtn:'સંપર્ક કરો',
+      quickLinks:'ઝડપી લિંક્સ', followUs:'અમને ફોલો કરો', subscribeNote:'ખેતર પરીક્ષણો, પાક માર્ગદર્શન અને ખેડૂત વાર્તાઓ માટે યૂટ્યૂબ પર સબ્સ્ક્રાઇબ કરો.',
+      aboutEy:'અમારા વિશે', aboutH1:'સંશોધનમાં મૂળ, ખેડૂતો સાથે વિકસતા',
+      productsEy:'અમારા ઉત્પાદનો', productsH1:'ખેતરમાં સાબિત થયેલા સંકર બીજ',
+      galleryEy:'ગેલેરી', galleryH1:'ખેતરની ક્ષણો',
+      contactEy:'સંપર્ક કરો', contactH1:'ચાલો સાથે મળીને વિકસીએ',
+      infraEy:'અમારી માળખાકીય સુવિધા', infraTitle:'દરેક પગલે ગુણવત્તા માટે બનાવેલ',
+      formTitle:'અમને સંદેશ મોકલો', btnSend:'સંદેશ મોકલો', youtubeTitle:'યૂટ્યૂબ પર જુઓ',
+      statCrops:'મુખ્ય પાક', statVar:'સંકર જાતો', statStates:'રાજ્યોમાં સેવા', statFarmer:'ખેડૂત-કેન્દ્રિત' },
+
+    bn: { home:'হোম', about:'আমাদের সম্পর্কে', products:'পণ্য', gallery:'গ্যালারি', contact:'যোগাযোগ',
+      heroBadge:'ভারতের দ্রুততম বর্ধনশীল বীজ কোম্পানিগুলোর একটি', heroT1:'বিশ্বাস বুনে,', heroT2:'সমৃদ্ধির', heroT3:'ফসল',
+      heroSub:'তুলা, ভুট্টা, ধান ও অন্যান্য ফসলে উচ্চ-কার্যক্ষম হাইব্রিড বীজ — নিরন্তর গবেষণা এবং কৃষক-প্রথম অঙ্গীকারে চালিত।',
+      btnExplore:'আমাদের বীজ দেখুন', btnTouch:'যোগাযোগ করুন', heroStat:'5 ফসলে হাইব্রিড জাত',
+      whoWeAre:'আমরা কারা', aboutTitle:'উদ্ভাবনের মাধ্যমে ভারতীয় কৃষির রূপান্তর', moreAbout:'আরও জানুন →',
+      ourCrops:'আমাদের ফসল', cropsTitle:'প্রতিটি অঞ্চলের জন্য তৈরি বীজ',
+      ctaTitle:'আজই কোর সিডস-এর সঙ্গে যুক্ত হন', ctaSub:'উৎপাদনশীলতা বাড়াতে ও গ্রামীণ জীবিকা উন্নত করতে নির্ভরযোগ্য, উদ্ভাবনী ও টেকসই বীজ সমাধান।', contactBtn:'যোগাযোগ করুন',
+      quickLinks:'দ্রুত লিঙ্ক', followUs:'আমাদের ফলো করুন', subscribeNote:'মাঠ পরীক্ষা, ফসল নির্দেশনা ও কৃষকের গল্পের জন্য ইউটিউবে সাবস্ক্রাইব করুন।',
+      aboutEy:'আমাদের সম্পর্কে', aboutH1:'গবেষণায় শিকড়, কৃষকের সঙ্গে বেড়ে ওঠা',
+      productsEy:'আমাদের পণ্য', productsH1:'মাঠে প্রমাণিত হাইব্রিড বীজ',
+      galleryEy:'গ্যালারি', galleryH1:'মাঠের মুহূর্ত',
+      contactEy:'যোগাযোগ', contactH1:'চলুন একসাথে বেড়ে উঠি',
+      infraEy:'আমাদের পরিকাঠামো', infraTitle:'প্রতিটি ধাপে গুণমানের জন্য নির্মিত',
+      formTitle:'আমাদের একটি বার্তা পাঠান', btnSend:'বার্তা পাঠান', youtubeTitle:'ইউটিউবে দেখুন',
+      statCrops:'প্রধান ফসল', statVar:'হাইব্রিড জাত', statStates:'রাজ্যে সেবা', statFarmer:'কৃষক-কেন্দ্রিক' },
+
+    pa: { home:'ਹੋਮ', about:'ਸਾਡੇ ਬਾਰੇ', products:'ਉਤਪਾਦ', gallery:'ਗੈਲਰੀ', contact:'ਸੰਪਰਕ ਕਰੋ',
+      heroBadge:'ਭਾਰਤ ਦੀਆਂ ਸਭ ਤੋਂ ਤੇਜ਼ੀ ਨਾਲ ਵਧ ਰਹੀਆਂ ਬੀਜ ਕੰਪਨੀਆਂ ਵਿੱਚੋਂ ਇੱਕ', heroT1:'ਭਰੋਸਾ ਉਗਾਉਂਦੇ,', heroT2:'ਖੁਸ਼ਹਾਲੀ ਦੀ', heroT3:'ਵਾਢੀ',
+      heroSub:'ਕਪਾਹ, ਮੱਕੀ, ਝੋਨੇ ਅਤੇ ਹੋਰ ਫ਼ਸਲਾਂ ਵਿੱਚ ਉੱਚ-ਕਾਰਗੁਜ਼ਾਰੀ ਵਾਲੇ ਹਾਈਬ੍ਰਿਡ ਬੀਜ — ਨਿਰੰਤਰ ਖੋਜ ਅਤੇ ਕਿਸਾਨ-ਪਹਿਲ ਵਚਨਬੱਧਤਾ ਨਾਲ।',
+      btnExplore:'ਸਾਡੇ ਬੀਜ ਵੇਖੋ', btnTouch:'ਸੰਪਰਕ ਕਰੋ', heroStat:'5 ਫ਼ਸਲਾਂ ਵਿੱਚ ਹਾਈਬ੍ਰਿਡ ਕਿਸਮਾਂ',
+      whoWeAre:'ਅਸੀਂ ਕੌਣ ਹਾਂ', aboutTitle:'ਨਵੀਨਤਾ ਰਾਹੀਂ ਭਾਰਤੀ ਖੇਤੀ ਦਾ ਪਰਿਵਰਤਨ', moreAbout:'ਹੋਰ ਜਾਣੋ →',
+      ourCrops:'ਸਾਡੀਆਂ ਫ਼ਸਲਾਂ', cropsTitle:'ਹਰ ਖੇਤਰ ਲਈ ਤਿਆਰ ਕੀਤੇ ਬੀਜ',
+      ctaTitle:'ਅੱਜ ਹੀ ਕੋਰ ਸੀਡਜ਼ ਨਾਲ ਜੁੜੋ', ctaSub:'ਉਤਪਾਦਕਤਾ ਵਧਾਉਣ ਅਤੇ ਪੇਂਡੂ ਰੋਜ਼ੀ-ਰੋਟੀ ਸੁਧਾਰਨ ਲਈ ਭਰੋਸੇਯੋਗ, ਨਵੀਨ ਅਤੇ ਟਿਕਾਊ ਬੀਜ ਹੱਲ।', contactBtn:'ਸੰਪਰਕ ਕਰੋ',
+      quickLinks:'ਤੇਜ਼ ਲਿੰਕ', followUs:'ਸਾਨੂੰ ਫਾਲੋ ਕਰੋ', subscribeNote:'ਖੇਤ ਪਰੀਖਣ, ਫ਼ਸਲ ਮਾਰਗਦਰਸ਼ਨ ਅਤੇ ਕਿਸਾਨ ਕਹਾਣੀਆਂ ਲਈ ਯੂਟਿਊਬ ਤੇ ਸਬਸਕ੍ਰਾਈਬ ਕਰੋ।',
+      aboutEy:'ਸਾਡੇ ਬਾਰੇ', aboutH1:'ਖੋਜ ਵਿੱਚ ਜੜ੍ਹਾਂ, ਕਿਸਾਨਾਂ ਨਾਲ ਵਧਦੇ',
+      productsEy:'ਸਾਡੇ ਉਤਪਾਦ', productsH1:'ਖੇਤ ਵਿੱਚ ਸਾਬਤ ਹਾਈਬ੍ਰਿਡ ਬੀਜ',
+      galleryEy:'ਗੈਲਰੀ', galleryH1:'ਖੇਤ ਦੇ ਪਲ',
+      contactEy:'ਸੰਪਰਕ ਕਰੋ', contactH1:'ਆਓ ਮਿਲ ਕੇ ਵਧੀਏ',
+      infraEy:'ਸਾਡਾ ਬੁਨਿਆਦੀ ਢਾਂਚਾ', infraTitle:'ਹਰ ਪੜਾਅ ਤੇ ਗੁਣਵੱਤਾ ਲਈ ਬਣਾਇਆ',
+      formTitle:'ਸਾਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ', btnSend:'ਸੁਨੇਹਾ ਭੇਜੋ', youtubeTitle:'ਯੂਟਿਊਬ ਤੇ ਵੇਖੋ',
+      statCrops:'ਮੁੱਖ ਫ਼ਸਲਾਂ', statVar:'ਹਾਈਬ੍ਰਿਡ ਕਿਸਮਾਂ', statStates:'ਰਾਜਾਂ ਵਿੱਚ ਸੇਵਾ', statFarmer:'ਕਿਸਾਨ-ਕੇਂਦਰਿਤ' },
+
+    or: { home:'ହୋମ', about:'ଆମ ବିଷୟରେ', products:'ଉତ୍ପାଦ', gallery:'ଗ୍ୟାଲେରୀ', contact:'ଯୋଗାଯୋଗ',
+      heroBadge:'ଭାରତର ଦ୍ରୁତତମ ବର୍ଦ୍ଧିଷ୍ଣୁ ବିହନ କମ୍ପାନୀ ମଧ୍ୟରୁ ଗୋଟିଏ', heroT1:'ବିଶ୍ୱାସ ବୁଣି,', heroT2:'ସମୃଦ୍ଧିର', heroT3:'ଅମଳ',
+      heroSub:'କପା, ମକା, ଧାନ ଓ ଅନ୍ୟ ଫସଲରେ ଉଚ୍ଚ-କ୍ଷମତା ସମ୍ପନ୍ନ ହାଇବ୍ରିଡ୍ ବିହନ — ନିରନ୍ତର ଗବେଷଣା ଓ କୃଷକ-ପ୍ରଥମ ପ୍ରତିବଦ୍ଧତା ସହିତ।',
+      btnExplore:'ଆମ ବିହନ ଦେଖନ୍ତୁ', btnTouch:'ଯୋଗାଯୋଗ କରନ୍ତୁ', heroStat:'5 ଫସଲରେ ହାଇବ୍ରିଡ୍ ପ୍ରକାର',
+      whoWeAre:'ଆମେ କିଏ', aboutTitle:'ନବସୃଜନ ମାଧ୍ୟମରେ ଭାରତୀୟ କୃଷିର ରୂପାନ୍ତର', moreAbout:'ଅଧିକ ଜାଣନ୍ତୁ →',
+      ourCrops:'ଆମ ଫସଲ', cropsTitle:'ପ୍ରତ୍ୟେକ ଅଞ୍ଚଳ ପାଇଁ ପ୍ରସ୍ତୁତ ବିହନ',
+      ctaTitle:'ଆଜି ହିଁ କୋର୍ ସିଡ୍ସ ସହ ଯୋଡ଼ି ହୁଅନ୍ତୁ', ctaSub:'ଉତ୍ପାଦନକ୍ଷମତା ବୃଦ୍ଧି ଓ ଗ୍ରାମୀଣ ଜୀବିକା ଉନ୍ନତି ପାଇଁ ବିଶ୍ୱସନୀୟ, ନବସୃଜନଶୀଳ ଓ ସ୍ଥାୟୀ ବିହନ ସମାଧାନ।', contactBtn:'ଯୋଗାଯୋଗ କରନ୍ତୁ',
+      quickLinks:'ଶୀଘ୍ର ଲିଙ୍କ', followUs:'ଆମକୁ ଅନୁସରଣ କରନ୍ତୁ', subscribeNote:'କ୍ଷେତ ପରୀକ୍ଷଣ, ଫସଲ ମାର୍ଗଦର୍ଶନ ଓ କୃଷକ କାହାଣୀ ପାଇଁ ୟୁଟ୍ୟୁବରେ ସବସ୍କ୍ରାଇବ କରନ୍ତୁ।',
+      aboutEy:'ଆମ ବିଷୟରେ', aboutH1:'ଗବେଷଣାରେ ଚେର, କୃଷକଙ୍କ ସହ ବଢ଼ୁଛୁ',
+      productsEy:'ଆମ ଉତ୍ପାଦ', productsH1:'କ୍ଷେତରେ ପ୍ରମାଣିତ ହାଇବ୍ରିଡ୍ ବିହନ',
+      galleryEy:'ଗ୍ୟାଲେରୀ', galleryH1:'କ୍ଷେତର ମୁହୂର୍ତ୍ତ',
+      contactEy:'ଯୋଗାଯୋଗ', contactH1:'ଆସନ୍ତୁ ଏକାଠି ବଢ଼ିବା',
+      infraEy:'ଆମ ଭିତ୍ତିଭୂମି', infraTitle:'ପ୍ରତ୍ୟେକ ପର୍ଯ୍ୟାୟରେ ଗୁଣବତ୍ତା ପାଇଁ ନିର୍ମିତ',
+      formTitle:'ଆମକୁ ସନ୍ଦେଶ ପଠାନ୍ତୁ', btnSend:'ସନ୍ଦେଶ ପଠାନ୍ତୁ', youtubeTitle:'ୟୁଟ୍ୟୁବରେ ଦେଖନ୍ତୁ',
+      statCrops:'ମୁଖ୍ୟ ଫସଲ', statVar:'ହାଇବ୍ରିଡ୍ ପ୍ରକାର', statStates:'ରାଜ୍ୟରେ ସେବା', statFarmer:'କୃଷକ-କେନ୍ଦ୍ରିତ' },
+  };
+
+  langList = [
+    { code:'en', native:'English', en:'English' },
+    { code:'hi', native:'हिन्दी', en:'Hindi' },
+    { code:'te', native:'తెలుగు', en:'Telugu' },
+    { code:'ta', native:'தமிழ்', en:'Tamil' },
+    { code:'kn', native:'ಕನ್ನಡ', en:'Kannada' },
+    { code:'ml', native:'മലയാളം', en:'Malayalam' },
+    { code:'mr', native:'मराठी', en:'Marathi' },
+    { code:'gu', native:'ગુજરાતી', en:'Gujarati' },
+    { code:'bn', native:'বাংলা', en:'Bengali' },
+    { code:'pa', native:'ਪੰਜਾਬੀ', en:'Punjabi' },
+    { code:'or', native:'ଓଡ଼ିଆ', en:'Odia' },
+  ];
+
+  go(t) {
+    this.setState({ tab: t, langOpen: false });
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0 });
+  }
+
+  toggleLang = () => this.setState(s => ({ langOpen: !s.langOpen }));
+  setLang = (c) => this.setState({ lang: c, langOpen: false });
+
+  pageCopy = {
+    en: {
+      aboutTeaserText: 'Coregenes Seed Research (I) Pvt Ltd offers a wide range of high-performance hybrid seeds, with a strong focus on Cotton and Maize. Our strength lies in robust, continuous research — a passionate team of scientists and agronomists working closely with farmers to understand field realities.',
+      aboutBody1: 'Coregenes Seed Research (I) Pvt Ltd is one of the fastest-growing seed companies in India, committed to transforming Indian agriculture through innovation and quality. We offer a wide range of high-performance hybrid seed, with a strong focus on Cotton and Maize, which are widely adopted by farmers across various regions. Expanding our footprint, we are actively developing superior seed varieties in other key crops such as Paddy, Redgram, Wheat, and several important vegetables to meet the evolving needs of the farming community.',
+      aboutBody2: 'Our core strength lies in robust and continuous research, driven by a passionate team of scientists and agronomists who work closely with farmers to understand field realities. We emphasize region-specific breeding, high yields, pest resistance, and adaptability to climate change. With a farmer-centric approach, Core Seeds aims to deliver dependable, innovative, and sustainable solutions that enhance productivity and improve rural livelihoods.',
+      leadershipEy: 'Our Leadership',
+      leadershipTitle: 'The people behind Core Seeds',
+      cottonTitle: 'Cotton',
+      maizeTitle: 'Maize',
+      footerSummary: 'Coregenes Seed Research (I) Pvt Ltd — delivering dependable, innovative and sustainable seed solutions to farmers across India.',
+      formNameLabel: 'Full Name',
+      formNamePlaceholder: 'Your name',
+      formPhoneLabel: 'Phone',
+      formPhonePlaceholder: 'Mobile number',
+      formEmailLabel: 'Email',
+      formEmailPlaceholder: 'you@email.com',
+      formMessageLabel: 'Message',
+      formMessagePlaceholder: 'How can we help?',
+      pillars: [
+        'Region-specific breeding for higher yields',
+        'Strong pest resistance & climate adaptability',
+        'Continuous research with field-driven insights',
+      ],
+      crops: [
+        { name: 'Cotton', count: '5 hybrids' },
+        { name: 'Maize', count: '3 hybrids' },
+        { name: 'Paddy', count: '4 varieties' },
+        { name: 'Red Gram', count: '3 varieties' },
+        { name: 'Bhendi', count: '2 varieties' },
+        { name: 'Wheat', count: 'In development' },
+      ],
+      leaders: [
+        { role: 'Managing Director', bioList: [
+          'Dr. J. Chandra Sekhar is a visionary leader with an unwavering commitment to serve farmers across the country. With decades of experience in the seed industry, he has played an instrumental role in shaping innovative solutions that directly benefit the agricultural community. Earlier in his career, he worked with Tulasi Seeds and Kaveri Seeds, where he became widely recognized for developing breakthrough products such as Jaadoo, Jackpot, and ATM, which transformed farming outcomes and set new benchmarks in the industry. His track record of success reflects not only his deep technical expertise but also his strong passion for creating sustainable value for farmers.',
+          'Today, Dr. Sekhar carries forward this mission at Core Seeds, where he is dedicated to repeating this history of innovation and impact. With a clear vision and strong leadership, he is driving strategies that align with the company’s long-term goals while ensuring that every initiative creates meaningful benefits for stakeholders—especially farmers. His role is pivotal in steering Core Seeds toward growth, resilience, and leadership in the agri-business sector, reinforcing the company’s vision and mission to deliver excellence, trust, and innovation to the farming community.',
+        ] },
+        { role: 'Executive Director', bioList: [
+          'Mrs. J. Jayasri Chandra Sekhar is a woman of substance who plays a vital role in shaping the growth and sustainability of Core Seeds. She oversees and monitors the overall aspects of Administration, Finance, and Accounts with a sharp eye for detail and a strong commitment to operational excellence. Her leadership ensures that the company’s foundation remains solid while also supporting its long-term strategic objectives.',
+          'Beyond her business responsibilities, Mrs. Jayasri has been instrumental in guiding Core Seeds towards meaningful opportunities in the field of Corporate Social Responsibility (CSR). Under her vision, the company has extended its wings into initiatives that uplift communities, empower farmers, and create value that goes beyond business. Her compassionate approach and forward-looking mindset make her not only a capable administrator but also a driving force behind the company’s ethical and social commitments. This balanced perspective makes her an integral contributor to the company’s journey and future direction.',
+        ] },
+      ],
+      infra: [
+        { title: 'Office Space', desc: 'Our office is equipped with a modern and efficient infrastructure designed to support a productive and comfortable work environment. We offer well-furnished workstations, high-speed internet, meeting rooms with advanced conferencing facilities, and dedicated spaces for collaboration and focused work.' },
+        { title: 'Research & Development', desc: 'Research and Development facility focused on high-quality seed innovation. Equipped with advanced labs, controlled environment testing areas, and expert agronomists, our infrastructure supports continuous improvement and rigorous testing to ensure we deliver seeds that are resilient, high-yielding, and tailored to diverse agricultural needs.' },
+        { title: 'Our Labs', desc: 'Our seed laboratory is a state-of-the-art facility designed to ensure the highest standards in seed quality, performance, and innovation. It is equipped with advanced equipment for genetic analysis, germination testing, purity assessment, moisture content analysis, and disease screening. Our team of skilled scientists and technicians rigorously test and develop seeds to enhance traits such as yield, disease resistance, and climate adaptability.' },
+        { title: 'Packing Process', desc: 'Our seed packing process is carefully designed to maintain quality, purity, and viability from lab to field. After passing all quality control checks, seeds are cleaned, graded, and dried to optimal moisture levels. They are then packed using automated, contamination-free systems in moisture-resistant and tamper-proof packaging. Each packet is accurately labeled with vital information such as variety, batch number, germination rate, and expiry date.' },
+      ],
+      cotton: [
+        ['Early flowering, medium maturity (150–160 days)', 'Round & medium boll, high yielding', 'Tolerant to Aphid and Jassids', 'Suited to rainfed & low-water areas across AP, Telangana, Karnataka, Maharashtra, Gujarat, MP, Odisha & Tamil Nadu', 'Boll size 5.5–6.0g with excellent bursting'],
+        ['Medium flowering & medium maturity (150–160 days)', 'Spacing 4×2 ft or 3.5×3 ft', 'Not suitable for close planting', 'Round to oval shape big boll hybrid', 'Boll weight 6.0–6.5 grams'],
+        ['Early flowering & early maturity (140–150 days)', 'Round & big boll, high yielding', 'Tolerant to Aphid and Jassids', 'Suitable to irrigated areas only', 'Boll size 5.5–6.0g with excellent bursting'],
+        ['High yielding medium maturity (150–160 days)', 'Spacing 4×2 ft or 3.5×3 ft', 'Not suitable for close planting', 'Oval shape very big boll hybrid', 'Boll weight 6.5–7.0 grams'],
+        ['Highly hairy, sucking-pest tolerant hybrid', 'Maturity 150–160 days', 'Spacing 4×2 ft or 3.5×3 ft', 'Round shape very big boll hybrid', 'Boll weight 6.5–7.0 grams'],
+      ],
+      maize: [
+        ['Wider adoptable, high yielding hybrid', 'Suitable to both Kharif & Rabi seasons', 'Performs well in assured rainfall & irrigated tracts', 'Maturity: Kharif 110–115 days, Rabi 120–125 days', 'Semi-flint orange seed, 82–84% shelling'],
+        ['Suitable to both Kharif & Rabi seasons', 'Long cob with lower placement & good tip filling', 'Maturity: Kharif 115–120 days, Rabi 125–130 days', 'Orange colour seed, 80–82% shelling', 'Field tolerance to major diseases'],
+        ['Wider adoptable, high yielding hybrid', 'Suitable to both Kharif & Rabi seasons', 'Performs well in assured rainfall & irrigated tracts', 'Maturity: Kharif 110–115 days, Rabi 120–125 days', 'Semi-flint orange seed, 82–84% shelling'],
+      ],
+      otherCrops: [
+        ['Superfine grain & medium maturity variety', 'Superfine grain & early maturity variety', 'Bold grain & early maturity variety', 'Bold grain & early maturity variety'],
+        ['', '', ''],
+        ['', ''],
+        ['Region-specific high-yield wheat under active R&D'],
+      ],
+      contactCards: [
+        { title: 'Address', value: '# 411 & 412, 4th Floor, Fairmount Square, Opp: Kompally Cine Planet, Pet-Basheerabad, Quthbullapur, Medchal-Malkajgiri, Hyderabad, Telangana - 500067' },
+        { title: 'Give us a call', value: '+91 8566 8566 94 (Office)  ·  +91 8566 8566 95 (Office)  ·  +91 8500 4755 66 (Customer care)' },
+        { title: 'Email', value: 'coreseeds@gmail.com  ·  info@coreseeds.in' },
+      ],
+    },
+    te: {
+      aboutTeaserText: 'కోర్‌జీన్స్ సీడ్ రీసెర్చ్ (I) ప్రైవేట్ లిమిటెడ్ పత్తి మరియు మొక్కజొన్నపై ప్రత్యేక దృష్టితో అధిక-నాణ్యత హైబ్రిడ్ విత్తనాల విస్తృత శ్రేణిని అందిస్తుంది. మా బలం నిరంతర, దృఢమైన పరిశోధనలో ఉంది — రైతుల భూస్థాయి అవసరాలను అర్థం చేసుకుంటూ పనిచేసే శాస్త్రవేత్తలు మరియు అగ్రోనమిస్టుల అంకిత బృందంతో.',
+      aboutBody1: 'కోర్‌జీన్స్ సీడ్ రీసెర్చ్ (I) ప్రైవేట్ లిమిటెడ్ భారతదేశంలో వేగంగా ఎదుగుతున్న విత్తన సంస్థలలో ఒకటి. నాణ్యత మరియు ఆవిష్కరణల ద్వారా భారత వ్యవసాయాన్ని రూపాంతరం చేయాలనే లక్ష్యంతో మేము పనిచేస్తున్నాం. పత్తి మరియు మొక్కజొన్నకు ప్రధాన ప్రాధాన్యతనిస్తూ, వివిధ ప్రాంతాల రైతులు విస్తృతంగా స్వీకరించిన అధిక-ప్రదర్శన హైబ్రిడ్ విత్తనాలను మేము అందిస్తున్నాం. అలాగే వరి, రెడ్‌గ్రామ్, గోధుమ మరియు ముఖ్య కూరగాయ పంటలలో కూడా రైతుల మారుతున్న అవసరాలకు సరిపోయే మెరుగైన విత్తన రకాలను అభివృద్ధి చేస్తున్నాం.',
+      aboutBody2: 'మా ప్రధాన బలం శక్తివంతమైన మరియు నిరంతర పరిశోధన. రైతులతో దగ్గరగా పనిచేసే శాస్త్రవేత్తలు మరియు అగ్రోనమిస్టుల బృందం ద్వారా మేము ప్రాంతానుకూల బ్రీడింగ్, అధిక దిగుబడి, పురుగు నిరోధకత మరియు వాతావరణ అనుకూలతపై దృష్టి పెడుతున్నాం. రైతు-కేంద్రిత దృక్పథంతో ఉత్పాదకతను పెంచి గ్రామీణ జీవనోపాధిని మెరుగుపరచే నమ్మకమైన, వినూత్న మరియు స్థిరమైన పరిష్కారాలను అందించడం కోర్ సీడ్స్ లక్ష్యం.',
+      leadershipEy: 'మా నాయకత్వం',
+      leadershipTitle: 'కోర్ సీడ్స్ వెనుక ఉన్న వ్యక్తులు',
+      cottonTitle: 'పత్తి',
+      maizeTitle: 'మొక్కజొన్న',
+      footerSummary: 'కోర్‌జీన్స్ సీడ్ రీసెర్చ్ (I) ప్రైవేట్ లిమిటెడ్ — భారతదేశం అంతటా రైతులకు నమ్మకమైన, వినూత్న మరియు స్థిరమైన విత్తన పరిష్కారాలను అందిస్తోంది.',
+      formNameLabel: 'పూర్తి పేరు',
+      formNamePlaceholder: 'మీ పేరు',
+      formPhoneLabel: 'ఫోన్',
+      formPhonePlaceholder: 'మొబైల్ నంబర్',
+      formEmailLabel: 'ఇమెయిల్',
+      formEmailPlaceholder: 'you@email.com',
+      formMessageLabel: 'సందేశం',
+      formMessagePlaceholder: 'మేము ఎలా సహాయం చేయగలం?',
+      pillars: [
+        'అధిక దిగుబడుల కోసం ప్రాంతానుకూల బ్రీడింగ్',
+        'బలమైన పురుగు నిరోధకత మరియు వాతావరణ అనుకూలత',
+        'భూస్థాయి అవగాహనతో నిరంతర పరిశోధన',
+      ],
+      crops: [
+        { name: 'పత్తి', count: '5 హైబ్రిడ్లు' },
+        { name: 'మొక్కజొన్న', count: '3 హైబ్రిడ్లు' },
+        { name: 'వరి', count: '4 రకాలు' },
+        { name: 'రెడ్ గ్రామ్', count: '3 రకాలు' },
+        { name: 'భెండీ', count: '2 రకాలు' },
+        { name: 'గోధుమ', count: 'అభివృద్ధిలో ఉంది' },
+      ],
+      leaders: [
+        { role: 'మేనేజింగ్ డైరెక్టర్', bioList: [
+          'డా. జె. చంద్రశేఖర్ దేశవ్యాప్తంగా రైతులకు సేవ చేయాలనే అచంచలమైన నిబద్ధత కలిగిన దూరదృష్టి గల నాయకుడు. విత్తన పరిశ్రమలో దశాబ్దాల అనుభవంతో, వ్యవసాయ సమాజానికి నేరుగా మేలు చేసే వినూత్న పరిష్కారాల రూపకల్పనలో ఆయన కీలక పాత్ర పోషించారు. తన కెరీర్ ప్రారంభంలో తులసి సీడ్స్ మరియు కావేరి సీడ్స్ సంస్థలతో పని చేస్తూ జాదూ, జాక్పాట్, ATM వంటి విప్లవాత్మక ఉత్పత్తులను అభివృద్ధి చేసి పరిశ్రమలో కొత్త ప్రమాణాలను నెలకొల్పారు. ఆయన విజయాలు లోతైన సాంకేతిక నైపుణ్యంతో పాటు రైతులకు స్థిరమైన విలువ సృష్టించాలనే ఉత్సాహాన్ని ప్రతిబింబిస్తాయి.',
+          'ఈరోజు అదే ఆవిష్కరణ మరియు ప్రభావ చరిత్రను కోర్ సీడ్స్‌లో కొనసాగించడానికి డా. శేఖర్ కట్టుబడి ఉన్నారు. స్పష్టమైన దృష్టి మరియు బలమైన నాయకత్వంతో, సంస్థ యొక్క దీర్ఘకాల లక్ష్యాలకు అనుగుణంగా వ్యూహాలను నడిపిస్తూ, ప్రతి కార్యక్రమం ముఖ్యంగా రైతులకు ప్రయోజనం చేకూరేలా చూస్తున్నారు. వ్యవసాయ వ్యాపార రంగంలో కోర్ సీడ్స్‌ను వృద్ధి, స్థైర్యం మరియు నాయకత్వ దిశగా నడిపించడంలో ఆయన పాత్ర కీలకం.',
+        ] },
+        { role: 'ఎగ్జిక్యూటివ్ డైరెక్టర్', bioList: [
+          'శ్రీమతి జె. జయశ్రీ చంద్రశేఖర్ కోర్ సీడ్స్ అభివృద్ధి మరియు స్థిరత్వాన్ని తీర్చిదిద్దడంలో ముఖ్య పాత్ర పోషించే సమర్థ నాయకురాలు. పరిపాలన, ఆర్థిక వ్యవహారాలు మరియు ఖాతాల సమగ్ర నిర్వహణను ఆమె అత్యంత శ్రద్ధతో పర్యవేక్షిస్తారు. ఆమె నాయకత్వం సంస్థ పునాదిని బలంగా ఉంచుతూ దీర్ఘకాల వ్యూహాత్మక లక్ష్యాలకు మద్దతు ఇస్తుంది.',
+          'వ్యాపార బాధ్యతలకు అతీతంగా, కార్పొరేట్ సోషల్ రెస్పాన్సిబిలిటీ (CSR) రంగంలో అర్థవంతమైన అవకాశాల వైపు కోర్ సీడ్స్‌ను దారితీసినవారిలో ఆమె ఒకరు. ఆమె దూరదృష్టితో సంస్థ సమాజాన్ని అభివృద్ధి చేసే, రైతులను శక్తివంతం చేసే మరియు వ్యాపారాన్ని మించి విలువను సృష్టించే కార్యక్రమాలలో అడుగుపెట్టింది. ఈ సమతుల్య దృక్పథం సంస్థ భవిష్యత్ ప్రయాణంలో ఆమెను అవిభాజ్య భాగస్వామిగా నిలబెడుతోంది.',
+        ] },
+      ],
+      infra: [
+        { title: 'ఆఫీస్ స్పేస్', desc: 'మా కార్యాలయం ఆధునిక మరియు సమర్థవంతమైన మౌలిక వసతులతో రూపొందించబడింది, ఉత్పాదకతతో కూడిన సౌకర్యవంతమైన పని వాతావరణాన్ని అందించడానికి. మెరుగైన వర్క్‌స్టేషన్లు, హై-స్పీడ్ ఇంటర్నెట్, ఆధునిక కాన్ఫరెన్సింగ్ సదుపాయాలతో మీటింగ్ రూమ్స్ మరియు సహకారం, కేంద్రీకృత పనికి ప్రత్యేక స్థలాలను మేము అందిస్తున్నాం.' },
+        { title: 'పరిశోధన & అభివృద్ధి', desc: 'ఉన్నత నాణ్యత విత్తన ఆవిష్కరణకు కట్టుబడిన పరిశోధన మరియు అభివృద్ధి కేంద్రం. ఆధునిక ప్రయోగశాలలు, నియంత్రిత పర్యావరణ పరీక్షా ప్రాంతాలు మరియు నిపుణులైన అగ్రోనమిస్టులతో మా మౌలిక వసతులు నిరంతర మెరుగుదల మరియు కఠిన పరీక్షలను మద్దతు ఇస్తాయి, తద్వారా స్థైర్యవంతమైన, అధిక దిగుబడినిచ్చే మరియు వివిధ వ్యవసాయ అవసరాలకు సరిపోయే విత్తనాలను మేము అందించగలుగుతాము.' },
+        { title: 'మా ల్యాబ్స్', desc: 'మా విత్తన ప్రయోగశాల విత్తన నాణ్యత, పనితీరు మరియు ఆవిష్కరణలో అత్యున్నత ప్రమాణాలను నిర్ధారించడానికి రూపుదిద్దుకున్న అత్యాధునిక సదుపాయం. ఇది జన్యు విశ్లేషణ, మొలక పరీక్ష, శుద్ధత పరీక్ష, తేమ విశ్లేషణ మరియు వ్యాధి స్క్రీనింగ్ కోసం అధునాతన పరికరాలతో అమర్చబడి ఉంది. దిగుబడి, వ్యాధి నిరోధకత మరియు వాతావరణ అనుకూలత వంటి లక్షణాలను మెరుగుపరచడానికి మా శాస్త్రవేత్తలు మరియు సాంకేతిక నిపుణులు కఠినంగా పరిశీలించి విత్తనాలను అభివృద్ధి చేస్తారు.' },
+        { title: 'ప్యాకింగ్ ప్రక్రియ', desc: 'మా విత్తన ప్యాకింగ్ ప్రక్రియ ప్రయోగశాల నుంచి పొలం వరకు నాణ్యత, శుద్ధత మరియు జీవన సామర్థ్యాన్ని నిలుపుకోవడానికి జాగ్రత్తగా రూపొందించబడింది. నాణ్యత నియంత్రణ పరీక్షలన్నింటిని ఉత్తీర్ణం అయిన తర్వాత విత్తనాలను శుభ్రపరచి, గ్రేడ్ చేసి, సరైన తేమ స్థాయికి ఆరబెట్టుతాం. తరువాత ఆటోమేటెడ్, కలుషితం కాని వ్యవస్థల ద్వారా తేమ నిరోధక మరియు టాంపర్-ప్రూఫ్ ప్యాకేజింగ్‌లో నింపుతాం. ప్రతి ప్యాకెట్‌పై రకం, బ్యాచ్ నంబర్, మొలక రేటు మరియు గడువు తేదీ వంటి ముఖ్య సమాచారం ఖచ్చితంగా ముద్రించబడుతుంది.' },
+      ],
+      cotton: [
+        ['తొలి పుష్పించడం, మధ్యస్థ పరిపక్వత (150–160 రోజులు)', 'గుండ్రటి మరియు మధ్యస్థ బోల్, అధిక దిగుబడి', 'ఆఫిడ్ మరియు జాసిడ్స్‌కు తట్టుకునే స్వభావం', 'ఏపీ, తెలంగాణ, కర్ణాటక, మహారాష్ట్ర, గుజరాత్, ఎంపీ, ఒడిశా మరియు తమిళనాడులో వర్షాధార మరియు తక్కువ నీటి ప్రాంతాలకు అనుకూలం', '5.5–6.0 గ్రాముల బోల్ పరిమాణం, అద్భుతమైన బర్స్టింగ్'],
+        ['మధ్యస్థ పుష్పించడం & మధ్యస్థ పరిపక్వత (150–160 రోజులు)', '4×2 అడుగులు లేదా 3.5×3 అడుగుల అంతరం', 'సన్నిహిత నాట్లకు అనుకూలం కాదు', 'గుండ్రటి నుండి అండాకారంలో పెద్ద బోల్ హైబ్రిడ్', 'బోల్ బరువు 6.0–6.5 గ్రాములు'],
+        ['తొలి పుష్పించడం & త్వరిత పరిపక్వత (140–150 రోజులు)', 'గుండ్రటి & పెద్ద బోల్, అధిక దిగుబడి', 'ఆఫిడ్ మరియు జాసిడ్స్‌కు తట్టుకునే స్వభావం', 'పూర్తిగా నీటిపారుదల ఉన్న ప్రాంతాలకు మాత్రమే అనుకూలం', '5.5–6.0 గ్రాముల బోల్ పరిమాణం, అద్భుతమైన బర్స్టింగ్'],
+        ['అధిక దిగుబడినిచ్చే మధ్యస్థ పరిపక్వత (150–160 రోజులు)', '4×2 అడుగులు లేదా 3.5×3 అడుగుల అంతరం', 'సన్నిహిత నాట్లకు అనుకూలం కాదు', 'అండాకారంలో చాలా పెద్ద బోల్ హైబ్రిడ్', 'బోల్ బరువు 6.5–7.0 గ్రాములు'],
+        ['అత్యంత హెయిరీ, సక్కింగ్ పెస్ట్స్‌ను తట్టుకునే హైబ్రిడ్', 'పరిపక్వత 150–160 రోజులు', '4×2 అడుగులు లేదా 3.5×3 అడుగుల అంతరం', 'గుండ్రటి ఆకారంలో చాలా పెద్ద బోల్ హైబ్రిడ్', 'బోల్ బరువు 6.5–7.0 గ్రాములు'],
+      ],
+      maize: [
+        ['విస్తృతంగా అనుకూలమయ్యే, అధిక దిగుబడినిచ్చే హైబ్రిడ్', 'ఖరీఫ్ మరియు రబీ రెండింటికీ అనుకూలం', 'భరోసా కలిగిన వర్షపాతం మరియు నీటిపారుదల ప్రాంతాల్లో బాగా పెరుగుతుంది', 'పరిపక్వత: ఖరీఫ్ 110–115 రోజులు, రబీ 120–125 రోజులు', 'సెమీ-ఫ్లింట్ ఆరెంజ్ గింజ, 82–84% షెల్లింగ్'],
+        ['ఖరీఫ్ మరియు రబీ రెండింటికీ అనుకూలం', 'లాంగ్ కాబ్, తక్కువ స్థానం మరియు మంచి టిప్ ఫిల్లింగ్', 'పరిపక్వత: ఖరీఫ్ 115–120 రోజులు, రబీ 125–130 రోజులు', 'ఆరెంజ్ రంగు గింజ, 80–82% షెల్లింగ్', 'ప్రధాన వ్యాధులపై క్షేత్ర స్థాయి సహనం'],
+        ['విస్తృతంగా అనుకూలమయ్యే, అధిక దిగుబడినిచ్చే హైబ్రిడ్', 'ఖరీఫ్ మరియు రబీ రెండింటికీ అనుకూలం', 'భరోసా కలిగిన వర్షపాతం మరియు నీటిపారుదల ప్రాంతాల్లో బాగా పెరుగుతుంది', 'పరిపక్వత: ఖరీఫ్ 110–115 రోజులు, రబీ 120–125 రోజులు', 'సెమీ-ఫ్లింట్ ఆరెంజ్ గింజ, 82–84% షెల్లింగ్'],
+      ],
+      otherCrops: [
+        ['సూపర్‌ఫైన్ గింజ & మధ్యస్థ పరిపక్వత రకం', 'సూపర్‌ఫైన్ గింజ & త్వరిత పరిపక్వత రకం', 'బోల్డ్ గింజ & త్వరిత పరిపక్వత రకం', 'బోల్డ్ గింజ & త్వరిత పరిపక్వత రకం'],
+        ['', '', ''],
+        ['', ''],
+        ['ప్రాంతానుకూల అధిక దిగుబడి గోధుమ రకాలు పరిశోధనలో ఉన్నాయి'],
+      ],
+      contactCards: [
+        { title: 'చిరునామా', value: '# 411 & 412, 4వ అంతస్తు, ఫెయిర్‌మౌంట్ స్క్వేర్, కొంపల్లి సినీ ప్లానెట్ ఎదురుగా, పెట్-బషీరాబాద్, కుత్బుల్లాపూర్, మెడ్చల్-మల్కాజ్‌గిరి, హైదరాబాద్, తెలంగాణ - 500067' },
+        { title: 'మాకు కాల్ చేయండి', value: '+91 8566 8566 94 (ఆఫీస్)  ·  +91 8566 8566 95 (ఆఫీస్)  ·  +91 8500 4755 66 (కస్టమర్ కేర్)' },
+        { title: 'ఇమెయిల్', value: 'coreseeds@gmail.com  ·  info@coreseeds.in' },
+      ],
+    },
+  };
+
+renderVals() {
+    const tab = this.state.tab;
+    const L = this.state.lang;
+    const dict = this.i18n[L] || this.i18n.en;
+    const t = (k) => (dict[k] != null ? dict[k] : this.i18n.en[k]);
+    const copy = this.pageCopy[L] || this.pageCopy.en;
+    const nav = (x) => () => this.go(x);
+
+    const navDefs = [
+      { key: 'home', t: 'home' },
+      { key: 'about', t: 'about' },
+      { key: 'products', t: 'products' },
+      { key: 'gallery', t: 'gallery' },
+      { key: 'contact', t: 'contact' },
+    ];
+    const navItems = navDefs.map(n => ({
+      label: t(n.key),
+      go: nav(n.t),
+      color: tab === n.t ? '#14532d' : '#5c6b5e',
+      bg: tab === n.t ? '#eef3ea' : 'transparent',
+    }));
+
+    const curLang = this.langList.find(l => l.code === L) || this.langList[0];
+    const langOptions = this.langList.map(l => ({
+      native: l.native,
+      en: l.en,
+      pick: () => this.setLang(l.code),
+      color: l.code === L ? '#14532d' : '#3a4a3d',
+      bg: l.code === L ? '#eef3ea' : 'transparent',
+      weight: l.code === L ? 700 : 500,
+    }));
+
+    return {
+      navItems, langOptions, langLabel: curLang.native,
+      langOpen: this.state.langOpen,
+      videoRef: this.videoRef,
+      toggleLang: this.toggleLang,
+
+      goHome: nav('home'), goAbout: nav('about'), goProducts: nav('products'), goContact: nav('contact'),
+      isHome: tab === 'home', isAbout: tab === 'about', isProducts: tab === 'products',
+      isGallery: tab === 'gallery', isContact: tab === 'contact',
+
+      heroBadge: t('heroBadge'), heroT1: t('heroT1'), heroT2: t('heroT2'), heroT3: t('heroT3'),
+      heroSub: t('heroSub'), btnExplore: t('btnExplore'), btnTouch: t('btnTouch'), heroStatLabel: t('heroStat'),
+      whoWeAre: t('whoWeAre'), aboutTitle: t('aboutTitle'), moreAbout: t('moreAbout'),
+      ourCrops: t('ourCrops'), cropsTitle: t('cropsTitle'),
+      ctaTitle: t('ctaTitle'), ctaSub: t('ctaSub'), contactBtn: t('contactBtn'),
+      quickLinks: t('quickLinks'), followUs: t('followUs'), subscribeNote: t('subscribeNote'),
+      aboutEy: t('aboutEy'), aboutH1: t('aboutH1'),
+      productsEy: t('productsEy'), productsH1: t('productsH1'),
+      galleryEy: t('galleryEy'), galleryH1: t('galleryH1'),
+      contactEy: t('contactEy'), contactH1: t('contactH1'),
+      infraEy: t('infraEy'), infraTitle: t('infraTitle'),
+      formTitle: t('formTitle'), btnSend: t('btnSend'), youtubeTitle: t('youtubeTitle'),
+      aboutTeaserText: copy.aboutTeaserText,
+      aboutBody1: copy.aboutBody1,
+      aboutBody2: copy.aboutBody2,
+      leadershipEy: copy.leadershipEy,
+      leadershipTitle: copy.leadershipTitle,
+      cottonTitle: copy.cottonTitle,
+      maizeTitle: copy.maizeTitle,
+      footerSummary: copy.footerSummary,
+      formNameLabel: copy.formNameLabel,
+      formNamePlaceholder: copy.formNamePlaceholder,
+      formPhoneLabel: copy.formPhoneLabel,
+      formPhonePlaceholder: copy.formPhonePlaceholder,
+      formEmailLabel: copy.formEmailLabel,
+      formEmailPlaceholder: copy.formEmailPlaceholder,
+      formMessageLabel: copy.formMessageLabel,
+      formMessagePlaceholder: copy.formMessagePlaceholder,
+
+      stats: [
+        { num: '5+', label: t('statCrops') },
+        { num: '17+', label: t('statVar') },
+        { num: '8', label: t('statStates') },
+        { num: '100%', label: t('statFarmer') },
+      ],
+      pillars: copy.pillars,
+      crops: [
+        { name: copy.crops[0].name, icon: '🌿', count: copy.crops[0].count, bg: '#eef4e8', border: '#dbe8d3', iconImg: 'assets/cotton.png' },
+        { name: copy.crops[1].name, icon: '🌽', count: copy.crops[1].count, bg: '#fdf6e3', border: '#f1e3bf', showEmoji: true },
+        { name: copy.crops[2].name, icon: '🌾', count: copy.crops[2].count, bg: '#eef4e8', border: '#dbe8d3', iconImg: 'assets/paddy.png' },
+        { name: copy.crops[3].name, icon: '🫘', count: copy.crops[3].count, bg: '#fdf6e3', border: '#f1e3bf', showEmoji: true },
+        { name: copy.crops[4].name, icon: '🥬', count: copy.crops[4].count, bg: '#eef4e8', border: '#dbe8d3', iconImg: 'assets/okra.png' },
+        { name: copy.crops[5].name, icon: '🌾', count: copy.crops[5].count, bg: '#fdf6e3', border: '#f1e3bf', showEmoji: true },
+      ],
+
+      leaders: [
+        { name: 'Dr. J. Chandra Sekhar', role: copy.leaders[0].role, bioList: copy.leaders[0].bioList },
+        { name: 'Mrs. J. Jayasri Chandra Sekhar', role: copy.leaders[1].role, bioList: copy.leaders[1].bioList },
+      ],
+      heroImgList: [{ src: 'https://coreseeds.in/wp-content/uploads/2025/10/08c46f462386a90e1eb13ff98a9edc6ee5f662c9-1-scaled.png' }],
+      aboutImgList: [{ src: 'https://coreseeds.in/wp-content/uploads/2025/10/ff4140f90f21c9946f36d742393e33550cbfd4ed-1.png' }],
+      infra: [
+        { img: 'assets/infra-office.png', title: copy.infra[0].title, desc: copy.infra[0].desc },
+        { img: 'assets/infra-rnd.png', title: copy.infra[1].title, desc: copy.infra[1].desc },
+        { img: 'assets/infra-labs.png', title: copy.infra[2].title, desc: copy.infra[2].desc },
+        { img: 'assets/infra-packing.png', title: copy.infra[3].title, desc: copy.infra[3].desc },
+      ],
+
+      cotton: [
+        { name: 'Core-Baalu', img: 'assets/p-baalu.png', points: copy.cotton[0] },
+        { name: 'Core-Manmadhaa', img: 'assets/p-manmadhaa.png', points: copy.cotton[1] },
+        { name: 'Core-Taarak', img: 'assets/p-taarak.png', points: copy.cotton[2] },
+        { name: 'Core-Tilak', img: 'assets/p-tilak.png', points: copy.cotton[3] },
+        { name: 'Core-Waali', img: 'assets/p-waali.png', points: copy.cotton[4] },
+      ],
+      maize: [
+        { name: 'Core - Hitler', img: 'assets/p-hitler.png', points: copy.maize[0] },
+        { name: 'Core - Rangeelaa', img: 'assets/p-rangeelaa.png', points: copy.maize[1] },
+        { name: 'Core - Lokesh', img: 'assets/p-lokesh.png', points: copy.maize[2] },
+      ],
+      otherCrops: [
+        { name: copy.crops[2].name, icon: '🌾', iconImg: 'assets/paddy.png', items: [
+          { name: 'CPV-501', desc: copy.otherCrops[0][0] },
+          { name: 'CPV-503', desc: copy.otherCrops[0][1] },
+          { name: 'CPV-504', desc: copy.otherCrops[0][2] },
+          { name: 'CPV-551', desc: copy.otherCrops[0][3] },
+        ]},
+        { name: copy.crops[3].name, icon: '🫘', showEmoji: true, items: [
+          { name: 'CRGV-601', desc: copy.otherCrops[1][0] },
+          { name: 'CRGV-602', desc: copy.otherCrops[1][1] },
+          { name: 'CRGV-603', desc: copy.otherCrops[1][2] },
+        ]},
+        { name: copy.crops[4].name, icon: '🥬', iconImg: 'assets/okra.png', items: [
+          { name: 'COKH-1001', desc: copy.otherCrops[2][0] },
+          { name: 'COKH-1002', desc: copy.otherCrops[2][1] },
+        ]},
+        { name: copy.crops[5].name, icon: '🌾', showEmoji: true, items: [
+          { name: L === 'te' ? 'అభివృద్ధిలో ఉన్న కొత్త రకాలు' : 'New varieties in development', desc: copy.otherCrops[3][0] },
+        ]},
+      ],
+
+      gallery: ((b) => [
+        'ff4140f90f21c9946f36d742393e33550cbfd4ed-1','1a38321237c7a2d1e3ce3075b7b619ed643b388b-1',
+        'df0ca9b631c5e51cb054423440bd3f1b2b5e9ca4-1','dedf7521caff31446872bc9a3f03f0de46db700e-2',
+        '08c46f462386a90e1eb13ff98a9edc6ee5f662c9-1-scaled','dcbb41f57ec5185517805cec4f7f4522118bdbc3-1',
+        'cfbac9bff8bc19c2a010bcefa60157e2f3509557-1','0f0ad4597ab15a5bdbffe23dcfc4def5eb8be69b-1',
+        '2476ada57547746e485de45a1ab900ee00354d4b-1','a7c2e1ad68e3004ec21442d57c661eb65b3c6d4d-1',
+        'c64244b37f505682f0ae19aa657f8ba19cccb29d-1','285eb392d1da551be7b57130230aeb2161aa2e23-1',
+        'fde1853a82d1a27e676c817d77697361f7df07cc-1','03115c634ffcdc631d95c51084c0c176749f8561-1',
+        'a581793e58cf803849576468658d39554154d63d-1','3fcd8490d5f00dd454a5c6218031899e54f2b7ce-1',
+        '42816761160a1657522aa83a1f2218db50da42b0-1','4706bfa167bd718a1b732542e1a84558d9d53f22-1',
+        '13e69c14a7e2177e038993cb821518a3d569ddd6-1','417cfe96f8463e16c505edd2b3388d3a38669c8e-1',
+        '6597fdddaf965784c595ebd316eecef738a795b5-1','47253e0e9e5d80470b622b694e149cdb07a3e27d-1',
+        '2eb7dc7815175cdb1b2ca7d7a717f6849980b5d9-1','7c7533e68f80837398a4a710f6beafd96b3dd9b8-1',
+        '5d443ee390688d6e122276d4f28f3081a6c97868-1','23723b1e7872d2c98f7d1ee2c32d9b1ef3f10f45-1',
+      ].map(n => ({ src: b + n + '.png' })))('https://coreseeds.in/wp-content/uploads/2025/10/'),
+
+      contactCards: [
+        { icon: '📍', title: copy.contactCards[0].title, value: copy.contactCards[0].value },
+        { icon: '📞', title: copy.contactCards[1].title, value: copy.contactCards[1].value },
+        { icon: '✉️', title: copy.contactCards[2].title, value: copy.contactCards[2].value },
+      ],
+      socials: [
+        { label: '▶', url: 'https://youtube.com/@coreseeds?si=7IXCHKWe7XDUz64G', title: 'YouTube', bg: '#ff0000' },
+        { label: 'f', url: '#', title: 'Facebook', bg: 'rgba(255,255,255,0.08)' },
+        { label: '◎', url: '#', title: 'Instagram', bg: 'rgba(255,255,255,0.08)' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
