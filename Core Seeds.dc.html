@@ -17,27 +17,279 @@
   ::selection { background: #c3e6cf; }
   @keyframes cs-grow { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   @keyframes cs-fadeup { from { transform: translateY(14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .cs-shell { min-height: 100vh; display: flex; flex-direction: column; background: #f6f7f1; }
+  .cs-header-inner,
+  .cs-about-teaser,
+  .cs-stats-grid,
+  .cs-crops-grid,
+  .cs-infra-grid,
+  .cs-products-grid,
+  .cs-gallery-grid,
+  .cs-contact-grid,
+  .cs-form-grid,
+  .cs-footer-grid {
+    width: 100%;
+  }
+
+  @media (max-width: 1100px) {
+    .cs-header-inner,
+    .cs-about-teaser,
+    .cs-contact-grid,
+    .cs-footer-grid,
+    .cs-cta-box {
+      gap: 24px !important;
+    }
+
+    .cs-products-grid,
+    .cs-gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .cs-crops-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .cs-header-inner,
+    .cs-header-actions,
+    .cs-header-brand,
+    .cs-about-teaser,
+    .cs-contact-grid,
+    .cs-cta-box,
+    .cs-footer-grid {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    .cs-header-inner {
+      padding: 14px 20px !important;
+    }
+
+    .cs-header-brand,
+    .cs-header-actions {
+      width: 100%;
+    }
+
+    .cs-header-actions {
+      gap: 12px !important;
+    }
+
+    .cs-nav {
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .cs-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cs-lang-divider {
+      display: none !important;
+    }
+
+    .cs-about-teaser,
+    .cs-contact-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .cs-stats-grid,
+    .cs-infra-grid,
+    .cs-form-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .cs-crops-grid,
+    .cs-products-grid,
+    .cs-gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .cs-page-hero,
+    .cs-section,
+    .cs-section-tight,
+    .cs-products-wrap,
+    .cs-gallery-wrap,
+    .cs-contact-grid,
+    .cs-footer-grid,
+    .cs-about-copy {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+
+    .cs-hero-inner {
+      min-height: 62vh !important;
+      padding: 88px 20px 96px !important;
+    }
+
+    .cs-hero-title {
+      font-size: 42px !important;
+    }
+
+    .cs-hero-actions {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    .cs-cta-box {
+      padding: 36px 24px !important;
+    }
+
+    .cs-cta-title,
+    .cs-section-title,
+    .cs-page-title {
+      font-size: 30px !important;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .cs-header-inner {
+      padding: 12px 16px !important;
+    }
+
+    .cs-header-brand {
+      gap: 10px !important;
+    }
+
+    .cs-header-brand img {
+      height: 38px !important;
+    }
+
+    .cs-brand-divider {
+      height: 24px !important;
+    }
+
+    .cs-brand-text {
+      font-size: 8px !important;
+      letter-spacing: 1.4px !important;
+      max-width: 78px !important;
+    }
+
+    .cs-page-hero,
+    .cs-section,
+    .cs-section-tight,
+    .cs-products-wrap,
+    .cs-gallery-wrap,
+    .cs-contact-grid,
+    .cs-footer-grid,
+    .cs-about-copy {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+
+    .cs-hero-inner {
+      min-height: auto !important;
+      padding: 76px 16px 84px !important;
+    }
+
+    .cs-hero-badge {
+      font-size: 11px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .cs-hero-title {
+      font-size: 34px !important;
+      line-height: 1.12 !important;
+    }
+
+    .cs-hero-sub {
+      font-size: 15px !important;
+    }
+
+    .cs-stats-grid,
+    .cs-infra-grid,
+    .cs-products-grid,
+    .cs-gallery-grid,
+    .cs-crops-grid,
+    .cs-form-grid,
+    .cs-footer-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .cs-stat-item {
+      border-right: none !important;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding-bottom: 16px;
+    }
+
+    .cs-stat-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .cs-about-teaser {
+      padding-top: 56px !important;
+      padding-bottom: 56px !important;
+      gap: 28px !important;
+    }
+
+    .cs-crops-wrap,
+    .cs-products-wrap,
+    .cs-gallery-wrap,
+    .cs-contact-grid,
+    .cs-footer-grid,
+    .cs-section,
+    .cs-section-tight {
+      padding-top: 56px !important;
+      padding-bottom: 64px !important;
+    }
+
+    .cs-page-hero {
+      padding-top: 52px !important;
+      padding-bottom: 52px !important;
+    }
+
+    .cs-cta-box {
+      padding: 28px 20px !important;
+      border-radius: 22px !important;
+    }
+
+    .cs-cta-title,
+    .cs-section-title,
+    .cs-page-title,
+    .cs-product-group-title {
+      font-size: 26px !important;
+    }
+
+    .cs-form-card {
+      padding: 24px 20px !important;
+    }
+
+    .cs-leader-card {
+      padding: 24px 20px !important;
+    }
+
+    .cs-contact-card {
+      padding: 18px !important;
+    }
+
+    .cs-footer-grid {
+      gap: 28px !important;
+    }
+  }
 </style>
 </helmet>
 
-<div style="min-height: 100vh; display: flex; flex-direction: column; background: #f6f7f1;">
+<div class="cs-shell" style="min-height: 100vh; display: flex; flex-direction: column; background: #f6f7f1;">
 
   <!-- ===== HEADER ===== -->
   <header style="position: sticky; top: 0; z-index: 50; background: #ffffff; border-bottom: 1px solid #e6e9df; box-shadow: 0 2px 14px rgba(20,61,34,0.05);">
-    <div style="max-width: 1240px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
-      <div onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 14px; cursor: pointer;">
+    <div class="cs-header-inner" style="max-width: 1240px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <div class="cs-header-brand" onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 14px; cursor: pointer;">
         <img src="assets/core-seeds-logo.png" alt="Core Seeds" style="height: 44px; width: auto; display: block;">
-        <div style="width: 1px; height: 30px; background: #e6e9df;"></div>
-        <span style="font-size: 9.5px; letter-spacing: 2px; color: #9aa896; font-weight: 600; text-transform: uppercase; line-height: 1.35; max-width: 96px;">Coregenes Seed Research</span>
+        <div class="cs-brand-divider" style="width: 1px; height: 30px; background: #e6e9df;"></div>
+        <span class="cs-brand-text" style="font-size: 9.5px; letter-spacing: 2px; color: #9aa896; font-weight: 600; text-transform: uppercase; line-height: 1.35; max-width: 96px;">Coregenes Seed Research</span>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <nav style="display: flex; align-items: center; gap: 2px;">
+      <div class="cs-header-actions" style="display: flex; align-items: center; gap: 14px;">
+        <nav class="cs-nav" style="display: flex; align-items: center; gap: 2px;">
           <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
             <div onClick="{{ item.go }}" style="padding: 9px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all .15s; color: {{ item.color }}; background: {{ item.bg }};" style-hover="background:#eef3ea; color:#14532d;">{{ item.label }}</div>
           </sc-for>
         </nav>
-        <div style="width: 1px; height: 26px; background: #e6e9df;"></div>
+        <div class="cs-lang-divider" style="width: 1px; height: 26px; background: #e6e9df;"></div>
         <div style="position: relative;">
           <div onClick="{{ toggleLang }}" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #dde3d6; cursor: pointer; font-weight: 600; font-size: 13.5px; color: #14532d; background: #fbfcf8;" style-hover="background:#eef3ea;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1f7a3d" stroke-width="1.6"></circle><path d="M3 12h18" stroke="#1f7a3d" stroke-width="1.4"></path><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke="#1f7a3d" stroke-width="1.4"></path></svg>
@@ -69,15 +321,15 @@
         <video ref="{{ videoRef }}" autoplay="" muted="" playsinline="" src="assets/seed-growth.mp4" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"></video>
         <div style="position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(8,40,21,0.92) 0%, rgba(10,50,26,0.78) 40%, rgba(10,50,26,0.30) 72%, rgba(8,40,21,0.45) 100%);"></div>
         <div style="position: absolute; right: -60px; bottom: -60px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(240,180,41,0.22), transparent 70%); z-index: 1;"></div>
-        <div style="max-width: 1240px; margin: 0 auto; padding: 120px 32px 126px; min-height: 78vh; display: flex; align-items: center; position: relative; z-index: 2">
+        <div class="cs-hero-inner" style="max-width: 1240px; margin: 0 auto; padding: 120px 32px 126px; min-height: 78vh; display: flex; align-items: center; position: relative; z-index: 2">
           <div style="max-width: 600px;">
-            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 999px; background: rgba(240,180,41,0.16); border: 1px solid rgba(240,180,41,0.4); margin-bottom: 26px;">
+            <div class="cs-hero-badge" style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 999px; background: rgba(240,180,41,0.16); border: 1px solid rgba(240,180,41,0.4); margin-bottom: 26px;">
               <span style="width: 7px; height: 7px; border-radius: 50%; background: #f0b429;"></span>
               <span style="color: #f6d894; font-weight: 600; font-size: 13px; letter-spacing: 1px;">{{ heroBadge }}</span>
             </div>
-            <h1 style="font-family: 'Poppins'; font-weight: 800; color: #ffffff; font-size: 54px; line-height: 1.08; letter-spacing: -0.5px;">{{ heroT1 }}<br>{{ heroT2 }} <span style="color: #f0b429;">{{ heroT3 }}</span></h1>
-            <p style="color: #d4e7da; font-size: 18px; line-height: 1.65; margin-top: 22px; max-width: 520px;">{{ heroSub }}</p>
-            <div style="display: flex; gap: 14px; margin-top: 34px;">
+            <h1 class="cs-hero-title" style="font-family: 'Poppins'; font-weight: 800; color: #ffffff; font-size: 54px; line-height: 1.08; letter-spacing: -0.5px;">{{ heroT1 }}<br>{{ heroT2 }} <span style="color: #f0b429;">{{ heroT3 }}</span></h1>
+            <p class="cs-hero-sub" style="color: #d4e7da; font-size: 18px; line-height: 1.65; margin-top: 22px; max-width: 520px;">{{ heroSub }}</p>
+            <div class="cs-hero-actions" style="display: flex; gap: 14px; margin-top: 34px;">
               <div onClick="{{ goProducts }}" style="padding: 15px 30px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 8px 22px rgba(240,180,41,0.35);" style-hover="background:#ffc640;">{{ btnExplore }}</div>
               <div onClick="{{ goContact }}" style="padding: 15px 30px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.35); color: #fff; font-weight: 600; font-size: 15px; cursor: pointer;" style-hover="background:rgba(255,255,255,0.2);">{{ btnTouch }}</div>
             </div>
@@ -87,9 +339,9 @@
 
       <!-- Stats strip -->
       <section style="background: #14532d;">
-        <div style="max-width: 1240px; margin: 0 auto; padding: 26px 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <div class="cs-stats-grid" style="max-width: 1240px; margin: 0 auto; padding: 26px 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
           <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-            <div style="text-align: center; border-right: 1px solid rgba(255,255,255,0.12);">
+            <div class="cs-stat-item" style="text-align: center; border-right: 1px solid rgba(255,255,255,0.12);">
               <div style="font-family: 'Poppins'; font-weight: 800; font-size: 30px; color: #f0b429;">{{ s.num }}</div>
               <div style="font-size: 13px; color: #b9d2c0; margin-top: 2px;">{{ s.label }}</div>
             </div>
@@ -98,13 +350,13 @@
       </section>
 
       <!-- About teaser -->
-      <section style="max-width: 1240px; margin: 0 auto; padding: 86px 32px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 58px; align-items: center;">
+      <section class="cs-about-teaser" style="max-width: 1240px; margin: 0 auto; padding: 86px 32px; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 58px; align-items: center;">
         <div style="aspect-ratio: 1/1; border-radius: 22px; overflow: hidden; border: 1px solid #dde6d4; background: #e9f0e2;">
           <img src="https://coreseeds.in/wp-content/uploads/2025/10/ff4140f90f21c9946f36d742393e33550cbfd4ed-1.png" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
         </div>
         <div>
           <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ whoWeAre }}</div>
-          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 38px; line-height: 1.15; margin-top: 10px; color: #14532d; letter-spacing: -0.5px;">{{ aboutTitle }}</h2>
+          <h2 class="cs-section-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 38px; line-height: 1.15; margin-top: 10px; color: #14532d; letter-spacing: -0.5px;">{{ aboutTitle }}</h2>
           <p style="color: #4a5a4d; font-size: 16.5px; line-height: 1.7; margin-top: 20px;">{{ aboutTeaserText }}</p>
           <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 24px;">
             <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
@@ -120,12 +372,12 @@
 
       <!-- Crops -->
       <section style="background: #ffffff; border-top: 1px solid #ecefe5; border-bottom: 1px solid #ecefe5;">
-        <div style="max-width: 1240px; margin: 0 auto; padding: 84px 32px;">
+        <div class="cs-crops-wrap cs-section" style="max-width: 1240px; margin: 0 auto; padding: 84px 32px;">
           <div style="text-align: center; max-width: 640px; margin: 0 auto 50px;">
             <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ ourCrops }}</div>
-            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ cropsTitle }}</h2>
+            <h2 class="cs-section-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ cropsTitle }}</h2>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
+          <div class="cs-crops-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px;">
             <sc-for list="{{ crops }}" as="c" hint-placeholder-count="5">
               <div onClick="{{ goProducts }}" style="border-radius: 18px; padding: 30px 18px; text-align: center; background: {{ c.bg }}; border: 1px solid {{ c.border }}; cursor: pointer; transition: transform .15s;" style-hover="transform:translateY(-4px);">
                 <div style="font-size: 36px; height: 40px; display: flex; align-items: center; justify-content: center;"><sc-if value="{{ c.iconImg }}" hint-placeholder-val="{{ false }}"><div style="width: 48px; height: 40px; background-image: url({{ c.iconImg }}); background-size: contain; background-position: center; background-repeat: no-repeat;"></div></sc-if><sc-if value="{{ c.showEmoji }}" hint-placeholder-val="{{ true }}">{{ c.icon }}</sc-if></div>
@@ -138,11 +390,11 @@
       </section>
 
       <!-- CTA -->
-      <section style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
-        <div style="border-radius: 26px; background: linear-gradient(115deg, #14532d, #1f7a3d); padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden;">
+      <section class="cs-section" style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
+        <div class="cs-cta-box" style="border-radius: 26px; background: linear-gradient(115deg, #14532d, #1f7a3d); padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden;">
           <div style="position: absolute; right: -40px; top: -40px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(240,180,41,0.22), transparent 70%);"></div>
           <div style="position: relative;">
-            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #fff; line-height: 1.2;">{{ ctaTitle }}</h2>
+            <h2 class="cs-cta-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #fff; line-height: 1.2;">{{ ctaTitle }}</h2>
             <p style="color: #cfe2d5; font-size: 16px; margin-top: 12px; max-width: 540px;">{{ ctaSub }}</p>
           </div>
           <div onClick="{{ goContact }}" style="flex-shrink: 0; padding: 16px 34px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15.5px; cursor: pointer; position: relative;" style-hover="background:#ffc640;">{{ contactBtn }}</div>
@@ -154,27 +406,27 @@
     <!-- ===================== ABOUT ===================== -->
     <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ true }}">
     <div>
-      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+      <div class="cs-page-hero" style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
         <div style="max-width: 1240px; margin: 0 auto;">
           <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ aboutEy }}</div>
-          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ aboutH1 }}</h1>
+          <h1 class="cs-page-title" style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ aboutH1 }}</h1>
         </div>
       </div>
 
-      <section style="max-width: 980px; margin: 0 auto; padding: 70px 32px 30px;">
+      <section class="cs-about-copy" style="max-width: 980px; margin: 0 auto; padding: 70px 32px 30px;">
         <p style="font-size: 18px; line-height: 1.8; color: #3a4a3d;">{{ aboutBody1 }}</p>
         <p style="font-size: 18px; line-height: 1.8; color: #3a4a3d; margin-top: 22px;">{{ aboutBody2 }}</p>
       </section>
 
       <!-- Leadership -->
-      <section style="max-width: 1080px; margin: 0 auto; padding: 30px 32px 50px;">
+      <section class="cs-section-tight" style="max-width: 1080px; margin: 0 auto; padding: 30px 32px 50px;">
         <div style="text-align: center; margin-bottom: 38px;">
           <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ leadershipEy }}</div>
-          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 34px; margin-top: 10px; color: #14532d;">{{ leadershipTitle }}</h2>
+          <h2 class="cs-section-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 34px; margin-top: 10px; color: #14532d;">{{ leadershipTitle }}</h2>
         </div>
         <div style="display: flex; flex-direction: column; gap: 24px;">
           <sc-for list="{{ leaders }}" as="L" hint-placeholder-count="2">
-            <div style="background: #fff; border: 1px solid #e6e9df; border-left: 5px solid #f0b429; border-radius: 18px; padding: 32px 36px; box-shadow: 0 10px 30px rgba(20,61,34,0.05);">
+            <div class="cs-leader-card" style="background: #fff; border: 1px solid #e6e9df; border-left: 5px solid #f0b429; border-radius: 18px; padding: 32px 36px; box-shadow: 0 10px 30px rgba(20,61,34,0.05);">
               <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 24px; color: #14532d;">{{ L.name }}</h3>
               <div style="display: inline-block; margin-top: 6px; padding: 4px 14px; border-radius: 999px; background: #fdf2d9; color: #a07206; font-weight: 600; font-size: 13px;">{{ L.role }}</div>
               <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;">
@@ -189,12 +441,12 @@
 
       <!-- Infrastructure -->
       <section style="background: #ffffff; border-top: 1px solid #ecefe5; margin-top: 30px;">
-        <div style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
+        <div class="cs-section" style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
           <div style="text-align: center; margin-bottom: 50px;">
             <div style="color: #1f7a3d; font-weight: 700; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">{{ infraEy }}</div>
-            <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ infraTitle }}</h2>
+            <h2 class="cs-section-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 36px; margin-top: 10px; color: #14532d;">{{ infraTitle }}</h2>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px;">
+          <div class="cs-infra-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px;">
             <sc-for list="{{ infra }}" as="f" hint-placeholder-count="4">
               <div style="border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; background: #fbfcf8;">
                 <div style="aspect-ratio: 16/9; overflow: hidden; background: #e9f0e2;">
@@ -215,22 +467,22 @@
     <!-- ===================== PRODUCTS ===================== -->
     <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ true }}">
     <div>
-      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+      <div class="cs-page-hero" style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
         <div style="max-width: 1240px; margin: 0 auto;">
           <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ productsEy }}</div>
-          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ productsH1 }}</h1>
+          <h1 class="cs-page-title" style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ productsH1 }}</h1>
         </div>
       </div>
 
-      <div style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
+      <div class="cs-products-wrap" style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
 
         <!-- Cotton -->
         <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 28px;">
           <span style="font-size: 30px;">🌿</span>
-          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ cottonTitle }}</h2>
+          <h2 class="cs-product-group-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ cottonTitle }}</h2>
           <div style="flex: 1; height: 1px; background: #e0e5d7;"></div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
+        <div class="cs-products-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
           <sc-for list="{{ cotton }}" as="p" hint-placeholder-count="5">
             <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
               <div style="aspect-ratio: 4/3.4; overflow: hidden; background: #f4f7ef; display: flex; align-items: center; justify-content: center;"><img src="{{ p.img }}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
@@ -249,10 +501,10 @@
         <!-- Maize -->
         <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 28px;">
           <span style="font-size: 30px;">🌽</span>
-          <h2 style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ maizeTitle }}</h2>
+          <h2 class="cs-product-group-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #14532d;">{{ maizeTitle }}</h2>
           <div style="flex: 1; height: 1px; background: #e0e5d7;"></div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
+        <div class="cs-products-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px;">
           <sc-for list="{{ maize }}" as="p" hint-placeholder-count="3">
             <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
               <div style="aspect-ratio: 4/3.4; overflow: hidden; background: #fdf8ec; display: flex; align-items: center; justify-content: center;"><img src="{{ p.img }}" loading="lazy" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>
@@ -269,7 +521,7 @@
         </div>
 
         <!-- Paddy / Red Gram / Bhendi -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <div class="cs-products-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
           <sc-for list="{{ otherCrops }}" as="g" hint-placeholder-count="3">
             <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 20px; padding: 28px; box-shadow: 0 8px 24px rgba(20,61,34,0.05);">
               <div style="display: flex; align-items: center; gap: 10px;">
@@ -294,14 +546,14 @@
     <!-- ===================== GALLERY ===================== -->
     <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ true }}">
     <div>
-      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+      <div class="cs-page-hero" style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
         <div style="max-width: 1240px; margin: 0 auto;">
           <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ galleryEy }}</div>
-          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ galleryH1 }}</h1>
+          <h1 class="cs-page-title" style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ galleryH1 }}</h1>
         </div>
       </div>
-      <section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+      <section class="cs-gallery-wrap" style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px;">
+        <div class="cs-gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
           <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="9">
             <div style="aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; border: 1px solid #e6e9df; background: #e9f0e2;">
               <img src="{{ g.src }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
@@ -315,16 +567,16 @@
     <!-- ===================== CONTACT ===================== -->
     <sc-if value="{{ isContact }}" hint-placeholder-val="{{ true }}">
     <div>
-      <div style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
+      <div class="cs-page-hero" style="background: linear-gradient(115deg, #0f3d22, #1f7a3d); padding: 70px 32px;">
         <div style="max-width: 1240px; margin: 0 auto;">
           <div style="color: #f0b429; font-weight: 600; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">{{ contactEy }}</div>
-          <h1 style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ contactH1 }}</h1>
+          <h1 class="cs-page-title" style="font-family: 'Poppins'; font-weight: 800; font-size: 46px; color: #fff; margin-top: 10px;">{{ contactH1 }}</h1>
         </div>
       </div>
-      <section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 44px;">
+      <section class="cs-contact-grid" style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 90px; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 44px;">
         <div style="display: flex; flex-direction: column; gap: 18px;">
           <sc-for list="{{ contactCards }}" as="c" hint-placeholder-count="3">
-            <div style="display: flex; gap: 16px; align-items: flex-start; background: #fff; border: 1px solid #e6e9df; border-radius: 16px; padding: 22px;">
+            <div class="cs-contact-card" style="display: flex; gap: 16px; align-items: flex-start; background: #fff; border: 1px solid #e6e9df; border-radius: 16px; padding: 22px;">
               <div style="width: 46px; height: 46px; border-radius: 12px; background: #e3f0e6; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px;">{{ c.icon }}</div>
               <div>
                 <div style="font-family: 'Poppins'; font-weight: 700; font-size: 16px; color: #14532d;">{{ c.title }}</div>
@@ -340,9 +592,9 @@
             </div>
           </a>
         </div>
-        <div style="background: #fff; border: 1px solid #e6e9df; border-radius: 22px; padding: 36px; box-shadow: 0 12px 34px rgba(20,61,34,0.06);">
+        <div class="cs-form-card" style="background: #fff; border: 1px solid #e6e9df; border-radius: 22px; padding: 36px; box-shadow: 0 12px 34px rgba(20,61,34,0.06);">
           <h3 style="font-family: 'Poppins'; font-weight: 700; font-size: 24px; color: #14532d;">{{ formTitle }}</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px;">
+          <div class="cs-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px;">
             <div style="display: flex; flex-direction: column; gap: 7px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formNameLabel }}</label><input placeholder="{{ formNamePlaceholder }}" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></div>
             <div style="display: flex; flex-direction: column; gap: 7px;"><label style="font-size: 13px; font-weight: 600; color: #4a5a4d;">{{ formPhoneLabel }}</label><input placeholder="{{ formPhonePlaceholder }}" style="padding: 12px 14px; border: 1px solid #d8ddcf; border-radius: 10px; font-family: inherit; font-size: 14px; outline: none; background:#fbfcf8;" style-focus="border-color:#1f7a3d;"></div>
           </div>
@@ -358,7 +610,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer style="background: #0f3d22; color: #cfe2d5; position: relative; z-index: 1;">
-    <div style="max-width: 1240px; margin: 0 auto; padding: 56px 32px 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px;">
+    <div class="cs-footer-grid" style="max-width: 1240px; margin: 0 auto; padding: 56px 32px 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px;">
       <div>
         <div style="display: inline-flex; align-items: center; background: #ffffff; padding: 11px 16px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.2);">
           <img src="assets/core-seeds-logo.png" alt="Core Seeds" style="height: 40px; width: auto; display: block;">
