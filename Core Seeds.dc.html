@@ -146,57 +146,54 @@
 
     .cs-mobile-menu {
       display: block;
-      margin: 12px auto 0;
-      max-width: 1240px;
-      padding: 0 2px;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      width: 196px;
+      background: #fff;
+      border: 1px solid #e6e9df;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(20,61,34,0.16);
+      padding: 8px;
+      z-index: 90;
     }
 
     .cs-mobile-menu-card {
-      background: #ffffff;
-      border: 1px solid #e3e9dd;
-      border-radius: 28px;
-      box-shadow: 0 18px 42px rgba(20,61,34,0.12);
-      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 4px;
     }
 
     .cs-mobile-nav-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .cs-mobile-nav-item {
-      padding: 13px 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-      border: 1px solid #e6ece1;
-      color: #45604a;
-      background: #f8fbf6;
-    }
-
-    .cs-mobile-nav-item-active {
-      background: #ecf5ea;
-      color: #14532d;
-      border-color: #d7e5d2;
-    }
-
+    .cs-mobile-nav-item,
     .cs-mobile-youtube {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 18px;
+      width: 100%;
+      padding: 9px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 14.5px;
+      font-weight: 600;
       text-decoration: none;
-      background: linear-gradient(90deg, #fff6f6 0%, #ffffff 100%);
-      border: 1px solid #ffd5d5;
+      color: #3a4a3d;
+      background: transparent;
+      border: 0;
+    }
+
+    .cs-mobile-nav-item-active {
+      background: #eef3ea;
       color: #14532d;
+    }
+
+    .cs-mobile-youtube {
+      color: #c62828;
     }
 
     .cs-about-teaser,
@@ -244,29 +241,25 @@
 
     .cs-cta-box {
       padding: 40px 28px !important;
-      min-height: 460px;
+      min-height: 0;
+      flex-direction: column !important;
       align-items: flex-start !important;
-      justify-content: space-between !important;
-      border-radius: 32px !important;
+      justify-content: flex-start !important;
+      gap: 28px !important;
+      border-radius: 26px !important;
     }
 
-    .cs-cta-copy {
-      max-width: 340px !important;
-    }
-
+    .cs-cta-copy,
     .cs-cta-sub {
-      max-width: 300px !important;
-      font-size: 18px !important;
-      line-height: 1.45 !important;
-      color: #d7e7d8 !important;
+      max-width: 100% !important;
     }
 
     .cs-cta-button {
-      align-self: center;
-      min-width: 260px;
+      align-self: flex-start;
       text-align: center;
-      font-size: 18px !important;
-      padding: 20px 28px !important;
+      font-size: 16px !important;
+      padding: 16px 34px !important;
+      margin-top: 4px;
     }
 
     .cs-section-title,
@@ -311,13 +304,9 @@
       font-size: 12px;
     }
 
-    .cs-mobile-menu-card {
-      border-radius: 24px;
-      padding: 16px;
-    }
-
-    .cs-mobile-nav-grid {
-      grid-template-columns: 1fr;
+    .cs-mobile-menu {
+      right: 0;
+      width: 188px;
     }
 
     .cs-page-hero,
@@ -394,41 +383,38 @@
       padding-bottom: 52px !important;
     }
 
-    .cs-cta-box {
-      padding: 48px 28px 34px !important;
-      min-height: 620px;
-      border-radius: 0 !important;
-      margin: 0 !important;
-      width: 100% !important;
+    .cs-cta-section {
+      padding-top: 56px !important;
+      padding-bottom: 64px !important;
     }
 
-    .cs-cta-section {
-      max-width: none !important;
-      padding: 0 0 56px !important;
+    .cs-cta-box {
+      padding: 28px 20px !important;
+      width: 100% !important;
+      min-height: 0;
+      border-radius: 22px !important;
     }
 
     .cs-cta-title {
-      font-size: 56px !important;
-      line-height: 0.95 !important;
-      letter-spacing: -1.8px !important;
-      max-width: 240px;
+      font-size: 26px !important;
+      line-height: 1.18 !important;
+      letter-spacing: 0 !important;
+      max-width: none;
     }
 
     .cs-cta-sub {
-      margin-top: 28px !important;
-      max-width: 230px !important;
-      font-size: 17px !important;
-      line-height: 1.48 !important;
+      margin-top: 12px !important;
+      font-size: 16px !important;
+      line-height: 1.5 !important;
     }
 
     .cs-cta-button {
-      align-self: center;
-      min-width: 0;
-      width: 100%;
-      max-width: 340px;
-      padding: 24px 26px !important;
+      width: auto;
+      max-width: none;
+      padding: 16px 30px !important;
       border-radius: 999px !important;
-      font-size: 20px !important;
+      font-size: 15px !important;
+      margin-top: 8px;
     }
 
     .cs-section-title,
@@ -474,7 +460,7 @@
           </sc-for>
         </nav>
         <div class="cs-lang-divider" style="width: 1px; height: 26px; background: #e6e9df;"></div>
-        <div class="cs-lang-desktop cs-lang-mobile" style="position: relative;">
+        <div ref="{{ langRef }}" class="cs-lang-desktop cs-lang-mobile" style="position: relative;">
           <div class="cs-lang-mobile-trigger" onClick="{{ toggleLang }}" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #dde3d6; cursor: pointer; font-weight: 600; font-size: 13.5px; color: #14532d; background: #fbfcf8;" style-hover="background:#eef3ea;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1f7a3d" stroke-width="1.6"></circle><path d="M3 12h18" stroke="#1f7a3d" stroke-width="1.4"></path><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke="#1f7a3d" stroke-width="1.4"></path></svg>
             <span>{{ langLabel }}</span>
@@ -491,39 +477,30 @@
         <a class="cs-youtube-desktop" href="https://www.youtube.com/@coreseeds" target="_blank" rel="noopener" title="Core Seeds on YouTube" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: #ff0000; box-shadow: 0 4px 12px rgba(255,0,0,0.28); text-decoration: none;" style-hover="background:#e60000;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" style="position: relative"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.5c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.5c0-1.7-.2-3.3-.2-3.3ZM10 14.5v-5l4.2 2.5L10 14.5Z"></path><svg width="160" height="80" viewBox="0 0 160 80" style="position: absolute; left: 1px; top: 13px; width: 160px; height: 80px; overflow: visible; fill: none; stroke: #8a8378; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round"><path d="M 0 80 L 160 0"></path></svg></svg>
         </a>
-        <div class="cs-mobile-trigger" onClick="{{ toggleMobileMenu }}" aria-label="Open menu">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
-          </svg>
+        <div ref="{{ mobileMenuRef }}" style="position: relative;">
+          <div class="cs-mobile-trigger" onClick="{{ toggleMobileMenu }}" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div class="cs-mobile-menu">
+              <div class="cs-mobile-menu-card">
+                <div class="cs-mobile-nav-grid">
+                  <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+                    <div onClick="{{ item.go }}" class="cs-mobile-nav-item {{ item.mobileActive }}" style="padding: 9px 13px; border-radius: 9px; font-size: 14.5px; font-weight: 600; text-align: left; cursor: pointer; color: {{ item.mobileColor }}; background: {{ item.mobileBg }};">{{ item.label }}</div>
+                  </sc-for>
+                  <a class="cs-mobile-youtube" href="https://www.youtube.com/@coreseeds" target="_blank" rel="noopener">
+                    <span>{{ youtubeTitle }}</span>
+                    <span style="font-size: 14px;">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </sc-if>
         </div>
       </div>
     </div>
-    <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
-        <div class="cs-mobile-menu">
-          <div class="cs-mobile-menu-card">
-            <div class="cs-mobile-menu-group">
-              <div class="cs-mobile-menu-title">Pages</div>
-              <div class="cs-mobile-nav-grid">
-              <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
-                <div onClick="{{ item.go }}" class="cs-mobile-nav-item {{ item.mobileActive }}" style="padding: 13px 14px; border-radius: 16px; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; border: 1px solid #e6ece1; color: {{ item.mobileColor }}; background: {{ item.mobileBg }};">{{ item.label }}</div>
-              </sc-for>
-              </div>
-            </div>
-          <a class="cs-mobile-youtube" href="https://www.youtube.com/@coreseeds" target="_blank" rel="noopener">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <span style="display:flex; width:38px; height:38px; border-radius:12px; align-items:center; justify-content:center; background:#ff0000; box-shadow:0 6px 14px rgba(255,0,0,0.2);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M21.6 7.2s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-6.8.3c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 8.8 2 10.5v1.5c0 1.7.2 3.3.2 3.3s.2 1.4.8 2c.8.8 1.8.8 2.3.9 1.7.2 6.7.3 6.7.3s4 0 6.8-.3c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.3v-1.5c0-1.7-.2-3.3-.2-3.3ZM10 14.5v-5l4.2 2.5L10 14.5Z"></path></svg>
-              </span>
-              <div>
-                <div style="font-size: 14px; font-weight: 700; color:#14532d;">{{ youtubeTitle }}</div>
-                <div style="font-size: 11px; color:#8da193; margin-top:3px;">@coreseeds</div>
-              </div>
-            </div>
-            <span style="font-size: 18px; color:#ff0000;">↗</span>
-          </a>
-        </div>
-      </div>
-    </sc-if>
   </header>
 
   <main style="flex: 1; position: relative; z-index: 1;">
@@ -865,6 +842,8 @@ class Component extends DCLogic {
   state = { tab: 'home', lang: 'en', langOpen: false, mobileMenuOpen: false };
 
   videoRef = React.createRef();
+  langRef = React.createRef();
+  mobileMenuRef = React.createRef();
 
   playBg = () => {
     const v = this.videoRef.current;
@@ -877,11 +856,38 @@ class Component extends DCLogic {
   componentDidMount() {
     this.playBg();
     this.initTranslate();
+    if (typeof document !== 'undefined') {
+      document.addEventListener('mousedown', this.handleOutsideMenus);
+      document.addEventListener('touchstart', this.handleOutsideMenus, { passive: true });
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', this.closeMenus, { passive: true });
+    }
   }
   componentDidUpdate(_prevProps, prevState) {
     this.playBg();
     if (prevState.lang !== this.state.lang) this.applyGoogleTranslate(this.state.lang);
   }
+  componentWillUnmount() {
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('mousedown', this.handleOutsideMenus);
+      document.removeEventListener('touchstart', this.handleOutsideMenus);
+    }
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', this.closeMenus);
+    }
+  }
+
+  closeMenus = () => this.setState(s => (
+    s.langOpen || s.mobileMenuOpen ? { langOpen: false, mobileMenuOpen: false } : null
+  ));
+
+  handleOutsideMenus = (event) => {
+    const target = event && event.target;
+    const inLang = this.langRef.current && this.langRef.current.contains(target);
+    const inMobileMenu = this.mobileMenuRef.current && this.mobileMenuRef.current.contains(target);
+    if (!inLang && !inMobileMenu) this.closeMenus();
+  };
 
   initTranslate = () => {
     if (typeof window === 'undefined') return;
@@ -1134,7 +1140,7 @@ class Component extends DCLogic {
     if (typeof window !== 'undefined') window.scrollTo({ top: 0 });
   }
 
-  toggleLang = () => this.setState(s => ({ langOpen: !s.langOpen }));
+  toggleLang = () => this.setState(s => ({ langOpen: !s.langOpen, mobileMenuOpen: false }));
   toggleMobileMenu = () => this.setState(s => ({ mobileMenuOpen: !s.mobileMenuOpen, langOpen: false }));
   setLang = (c) => this.setState({ lang: c, langOpen: false, mobileMenuOpen: false });
 
@@ -1515,7 +1521,7 @@ renderVals() {
       navItems, langOptions, langLabel: curLang.native,
       langOpen: this.state.langOpen,
       mobileMenuOpen: this.state.mobileMenuOpen,
-      videoRef: this.videoRef,
+      videoRef: this.videoRef, langRef: this.langRef, mobileMenuRef: this.mobileMenuRef,
       toggleLang: this.toggleLang,
       toggleMobileMenu: this.toggleMobileMenu,
 
