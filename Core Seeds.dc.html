@@ -88,10 +88,45 @@
     }
 
     .cs-nav,
-    .cs-lang-desktop,
     .cs-youtube-desktop,
     .cs-lang-divider {
       display: none !important;
+    }
+
+    .cs-lang-mobile {
+      display: block !important;
+      position: relative !important;
+    }
+
+    .cs-lang-mobile-trigger {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 7px;
+      height: 52px;
+      padding: 0 14px;
+      border-radius: 18px;
+      border: 1px solid #dce4d8;
+      background: linear-gradient(180deg, #f8fbf5 0%, #edf4e8 100%);
+      color: #14532d;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .cs-lang-mobile-menu {
+      position: absolute !important;
+      right: 0 !important;
+      top: 60px !important;
+      width: 196px !important;
+      max-height: 360px !important;
+      overflow-y: auto !important;
+      background: #fff !important;
+      border: 1px solid #e6e9df !important;
+      border-radius: 18px !important;
+      box-shadow: 0 16px 40px rgba(20,61,34,0.16) !important;
+      padding: 8px !important;
+      z-index: 90 !important;
     }
 
     .cs-mobile-trigger {
@@ -126,8 +161,7 @@
       gap: 18px;
     }
 
-    .cs-mobile-nav-grid,
-    .cs-mobile-lang-list {
+    .cs-mobile-nav-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
@@ -147,22 +181,6 @@
 
     .cs-mobile-nav-item-active {
       background: #ecf5ea;
-      color: #14532d;
-      border-color: #d7e5d2;
-    }
-
-    .cs-mobile-lang-item {
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid #e6ece1;
-      background: #fbfcf8;
-      color: #45604a;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .cs-mobile-lang-item-active {
-      background: #eef3ea;
       color: #14532d;
       border-color: #d7e5d2;
     }
@@ -264,13 +282,19 @@
       border-radius: 16px;
     }
 
+    .cs-lang-mobile-trigger {
+      height: 46px;
+      padding: 0 12px;
+      border-radius: 16px;
+      font-size: 12px;
+    }
+
     .cs-mobile-menu-card {
       border-radius: 24px;
       padding: 16px;
     }
 
-    .cs-mobile-nav-grid,
-    .cs-mobile-lang-list {
+    .cs-mobile-nav-grid {
       grid-template-columns: 1fr;
     }
 
@@ -397,14 +421,14 @@
           </sc-for>
         </nav>
         <div class="cs-lang-divider" style="width: 1px; height: 26px; background: #e6e9df;"></div>
-        <div class="cs-lang-desktop" style="position: relative;">
-          <div onClick="{{ toggleLang }}" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #dde3d6; cursor: pointer; font-weight: 600; font-size: 13.5px; color: #14532d; background: #fbfcf8;" style-hover="background:#eef3ea;">
+        <div class="cs-lang-desktop cs-lang-mobile" style="position: relative;">
+          <div class="cs-lang-mobile-trigger" onClick="{{ toggleLang }}" style="display: flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 999px; border: 1px solid #dde3d6; cursor: pointer; font-weight: 600; font-size: 13.5px; color: #14532d; background: #fbfcf8;" style-hover="background:#eef3ea;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1f7a3d" stroke-width="1.6"></circle><path d="M3 12h18" stroke="#1f7a3d" stroke-width="1.4"></path><path d="M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke="#1f7a3d" stroke-width="1.4"></path></svg>
             <span>{{ langLabel }}</span>
             <span style="font-size: 9px; color: #7a8a7c;">▼</span>
           </div>
           <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position: absolute; right: 0; top: 48px; background: #fff; border: 1px solid #e6e9df; border-radius: 14px; box-shadow: 0 16px 40px rgba(20,61,34,0.16); padding: 8px; width: 196px; max-height: 360px; overflow-y: auto; z-index: 80;">
+            <div class="cs-lang-mobile-menu" style="position: absolute; right: 0; top: 48px; background: #fff; border: 1px solid #e6e9df; border-radius: 14px; box-shadow: 0 16px 40px rgba(20,61,34,0.16); padding: 8px; width: 196px; max-height: 360px; overflow-y: auto; z-index: 80;">
               <sc-for list="{{ langOptions }}" as="lng" hint-placeholder-count="6">
                 <div onClick="{{ lng.pick }}" style="display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-radius: 9px; cursor: pointer; font-size: 14.5px; font-weight: {{ lng.weight }}; color: {{ lng.color }}; background: {{ lng.bg }};" style-hover="background:#eef3ea;"><span>{{ lng.native }}</span><span style="font-size: 11px; color: #9aa896; font-weight: 500;">{{ lng.en }}</span></div>
               </sc-for>
@@ -422,27 +446,16 @@
       </div>
     </div>
     <sc-if value="{{ mobileMenuOpen }}" hint-placeholder-val="{{ false }}">
-      <div class="cs-mobile-menu">
-        <div class="cs-mobile-menu-card">
-          <div class="cs-mobile-menu-group">
-            <div class="cs-mobile-menu-title">Pages</div>
-            <div class="cs-mobile-nav-grid">
+        <div class="cs-mobile-menu">
+          <div class="cs-mobile-menu-card">
+            <div class="cs-mobile-menu-group">
+              <div class="cs-mobile-menu-title">Pages</div>
+              <div class="cs-mobile-nav-grid">
               <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
                 <div onClick="{{ item.go }}" class="cs-mobile-nav-item {{ item.mobileActive }}" style="padding: 13px 14px; border-radius: 16px; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; border: 1px solid #e6ece1; color: {{ item.mobileColor }}; background: {{ item.mobileBg }};">{{ item.label }}</div>
               </sc-for>
+              </div>
             </div>
-          </div>
-          <div class="cs-mobile-menu-group">
-            <div class="cs-mobile-menu-title">Language</div>
-            <div class="cs-mobile-lang-list">
-              <sc-for list="{{ langOptions }}" as="lng" hint-placeholder-count="6">
-                <div onClick="{{ lng.pick }}" class="cs-mobile-lang-item {{ lng.mobileActive }}" style="padding: 12px 14px; border-radius: 16px; border: 1px solid #e6ece1; background: {{ lng.mobileBg }}; color: {{ lng.color }}; cursor: pointer; text-align: left;">
-                  <div style="font-size: 14px; font-weight: {{ lng.weight }};">{{ lng.native }}</div>
-                  <div style="font-size: 11px; color: #8da193; margin-top: 3px;">{{ lng.en }}</div>
-                </div>
-              </sc-for>
-            </div>
-          </div>
           <a class="cs-mobile-youtube" href="https://www.youtube.com/@coreseeds" target="_blank" rel="noopener">
             <div style="display:flex; align-items:center; gap:12px;">
               <span style="display:flex; width:38px; height:38px; border-radius:12px; align-items:center; justify-content:center; background:#ff0000; box-shadow:0 6px 14px rgba(255,0,0,0.2);">
