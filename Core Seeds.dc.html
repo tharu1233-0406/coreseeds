@@ -69,17 +69,18 @@
 
   @media (max-width: 820px) {
     .cs-header {
-      background: transparent !important;
-      border-bottom: none !important;
-      box-shadow: none !important;
-      padding: 12px 16px 0 !important;
+      background: rgba(255,255,255,0.96) !important;
+      border-bottom: 1px solid #e6e9df !important;
+      box-shadow: 0 6px 20px rgba(20,61,34,0.06) !important;
+      padding: 0 !important;
+      backdrop-filter: blur(8px);
     }
 
     .cs-header-inner {
-      padding: 18px !important;
-      border-radius: 28px !important;
-      background: #ffffff;
-      box-shadow: 0 16px 36px rgba(20,61,34,0.12);
+      padding: 14px 20px !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
       align-items: center !important;
     }
 
@@ -242,10 +243,32 @@
     }
 
     .cs-cta-box {
-      padding: 36px 24px !important;
+      padding: 40px 28px !important;
+      min-height: 460px;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+      border-radius: 32px !important;
     }
 
-    .cs-cta-title,
+    .cs-cta-copy {
+      max-width: 340px !important;
+    }
+
+    .cs-cta-sub {
+      max-width: 300px !important;
+      font-size: 18px !important;
+      line-height: 1.45 !important;
+      color: #d7e7d8 !important;
+    }
+
+    .cs-cta-button {
+      align-self: center;
+      min-width: 260px;
+      text-align: center;
+      font-size: 18px !important;
+      padding: 20px 28px !important;
+    }
+
     .cs-section-title,
     .cs-page-title {
       font-size: 30px !important;
@@ -255,7 +278,6 @@
   @media (max-width: 560px) {
     .cs-header-inner {
       padding: 12px 16px !important;
-      border-radius: 24px !important;
     }
 
     .cs-header-brand {
@@ -373,11 +395,42 @@
     }
 
     .cs-cta-box {
-      padding: 28px 20px !important;
-      border-radius: 22px !important;
+      padding: 48px 28px 34px !important;
+      min-height: 620px;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
     }
 
-    .cs-cta-title,
+    .cs-cta-section {
+      max-width: none !important;
+      padding: 0 0 56px !important;
+    }
+
+    .cs-cta-title {
+      font-size: 56px !important;
+      line-height: 0.95 !important;
+      letter-spacing: -1.8px !important;
+      max-width: 240px;
+    }
+
+    .cs-cta-sub {
+      margin-top: 28px !important;
+      max-width: 230px !important;
+      font-size: 17px !important;
+      line-height: 1.48 !important;
+    }
+
+    .cs-cta-button {
+      align-self: center;
+      min-width: 0;
+      width: 100%;
+      max-width: 340px;
+      padding: 24px 26px !important;
+      border-radius: 999px !important;
+      font-size: 20px !important;
+    }
+
     .cs-section-title,
     .cs-page-title,
     .cs-product-group-title {
@@ -552,14 +605,14 @@
       </section>
 
       <!-- CTA -->
-      <section class="cs-section" style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
+      <section class="cs-section cs-cta-section" style="max-width: 1240px; margin: 0 auto; padding: 80px 32px;">
         <div class="cs-cta-box" style="border-radius: 26px; background: linear-gradient(115deg, #14532d, #1f7a3d); padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden;">
           <div style="position: absolute; right: -40px; top: -40px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(240,180,41,0.22), transparent 70%);"></div>
-          <div style="position: relative;">
+          <div class="cs-cta-copy" style="position: relative;">
             <h2 class="cs-cta-title" style="font-family: 'Poppins'; font-weight: 700; font-size: 32px; color: #fff; line-height: 1.2;">{{ ctaTitle }}</h2>
-            <p style="color: #cfe2d5; font-size: 16px; margin-top: 12px; max-width: 540px;">{{ ctaSub }}</p>
+            <p class="cs-cta-sub" style="color: #cfe2d5; font-size: 16px; margin-top: 12px; max-width: 540px;">{{ ctaSub }}</p>
           </div>
-          <div onClick="{{ goContact }}" style="flex-shrink: 0; padding: 16px 34px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15.5px; cursor: pointer; position: relative;" style-hover="background:#ffc640;">{{ contactBtn }}</div>
+          <div class="cs-cta-button" onClick="{{ goContact }}" style="flex-shrink: 0; padding: 16px 34px; border-radius: 999px; background: #f0b429; color: #14532d; font-weight: 700; font-size: 15.5px; cursor: pointer; position: relative;" style-hover="background:#ffc640;">{{ contactBtn }}</div>
         </div>
       </section>
     </div>
